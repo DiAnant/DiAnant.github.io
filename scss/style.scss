@@ -1,67 +1,61 @@
-$bg-color:#333;
-$font-color:#fff;
-$primary-color:#008ed6;
-$dark-overlay: rgba(0,0,0,0.7);
-$icon-size:30px;
+$primary: #3292a6;
+$primary-overlay : rgba(50,146,166,0.8);
 
 body{
-  background:$bg-color;
-  color:$font-color;
+  margin-top : 105px;
 }
 
 .navbar{
-  border-bottom:$primary-color 3px solid;
-  opacity:0.8;
-}
+  box-shadow: 2px 2px 5px $primary;
+  opacity: 0.95;
+  background: white;
 
-#home-section{
-  background:url('../img/home.jpg') no-repeat;
-  background-size:cover;
-  background-attachment:fixed;
-  min-height:700px;
-
-  .dark-overlay{
-    background-color:$dark-overlay;
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    min-height:700px;
-  }
-
-  .home-inner{
-    padding-top:150px;
-  }
-
-  .card-form{
-    opacity:0.8;
-  }
-
-  .fa{
-    color:$primary-color;
-    background:#fff;
-    padding:4px;
-    border-radius:5px;
-    font-size:$icon-size;
+  .nav-item{
+    font-size: 1.4rem;
+    padding-right: 20px;
   }
 }
 
-#explore-section, #share-section{
-  .fa{
-    color:#fff;
-    background:#333;
-    padding:4px;
-    border-radius:5px;
-    font-size:$icon-size;
+#SHOWCASE{
+  position: relative;
+  background: url("../img/mount.jpg");
+  min-height: 600px;
+
+  .primary-overlay{
+    background: $primary-overlay;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 }
 
-#create-section{
+.info-header{
+  width: 50%;
+  margin: auto;
+  border-bottom: 1px #ddd solid;
+}
+
+.card-header{
+  cursor: pointer;
+}
+
+#authors{
+  img{
+    margin-top: -50px;
+  }
+
   .fa{
-    color:$primary-color;
-    background:#fff;
-    padding:4px;
-    border-radius:5px;
-    font-size:$icon-size;
+    font-size: 25px;
+    color: $primary;
+  }
+
+  .card:hover{
+    background: $primary;
+    color: white;
+    .fa{
+      color: white;
+    }
   }
 }
