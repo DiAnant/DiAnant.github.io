@@ -1,0 +1,181 @@
+<html>
+<head>
+	<title>The Future</title>
+</head>
+<h3>Fuck Fortnite !!</h3>
+<canvas id="gameCanvas" width="800" height="600"></canvas>
+
+<script>
+	var canvas;
+	var canvasContext;
+	// ball's inital position in X Direction
+	var ballX = 50;
+	// ball's speed in X direction
+	var ballSpeedX = 10;
+
+	// ball's inital position in Y Direction
+	var ballY = 50;
+	// ball's speed in Y direction
+	var ballSpeedY = 4;
+	var player1Score = 0;
+	var player2Score = 0;
+	const winning_score = 3;
+
+	var showingWinScreen = false;
+
+	var paddle1Y = 250;
+	var paddle2Y = 250;
+	const paddleHeight = 100;
+	const paddleThickness = 10;
+
+	function calculateMousePos(evt){
+		var rect = canvas.getBoundingClientRect();
+		var root = document.documentElement;
+		var mouseX = evt.clientX - rect.left - root.scrollLeft;
+		var mouseY = evt.clientY - rect.top - root.scrollTop;
+		return{
+			x:mouseX,
+			y:mouseY
+		};
+	}
+
+	function handleMouseClick(evt){
+		if(showingWinScreen){
+			player1Score = player2Score = 0;
+			showingWinScreen = false;
+		}
+	}
+
+	window.onload = function(){
+		canvas = document.getElementById('gameCanvas');
+		canvasContext = canvas.getContext('2d');
+		// framesPerSecond for slowing down the shit (otherwise it will be way too fast to see any change)
+		var framesPerSecond = 30;
+		setInterval(function(){
+				moveEverything();
+				drawEverything();
+		}, 1000/framesPerSecond);
+
+		canvas.addEventListener('mousedown', handleMouseClick);
+
+		canvas.addEventListener('mousemove', function(evt){
+			var mousePos = calculateMousePos(evt);
+			paddle1Y = mousePos.y - (paddleHeight/2);
+		});
+	}
+
+	// function to reset the ball
+	function ballReset(){
+		if(player1Score >= winning_score || player2Score >= winning_score){
+			showingWinScreen = true;
+		}
+		ballX = canvas.width/2;
+		ballY = canvas.height/2;
+		ballSpeedX = -ballSpeedX;
+	}
+
+	function computerMovement(){
+		var paddle2YCenter = paddle2Y + (paddleHeight/2);
+		if(paddle2YCenter < ballY-40){			
+			paddle2Y += 6;
+		}
+		else if(paddle2YCenter > ballY+40){
+			paddle2Y -= 6;
+		}
+	}
+
+	function moveEverything()
+	{	
+		if(showingWinScreen){
+			return;
+		}
+		computerMovement();
+		// In x direction
+		ballX += ballSpeedX;
+
+		if(ballX > canvas.width )
+		{
+			if((ballY > paddle2Y) && (ballY < paddle2Y+paddleHeight)){
+				ballSpeedX = -ballSpeedX;
+			var deltaY = ballY - (paddle2Y+paddleHeight/2);
+			ballSpeedY = deltaY/3;
+			}
+			else{
+				player1Score++;	
+				ballReset();
+			}
+		}
+
+		if(ballX < 0)
+		{	
+			if((ballY > paddle1Y) && (ballY < paddle1Y+paddleHeight)){
+				ballSpeedX = -ballSpeedX;
+
+			var deltaY = ballY - (paddle1Y+paddleHeight/2);
+			ballSpeedY = deltaY/3;
+			}
+			else{
+				player2Score++;	
+				ballReset();
+			}
+		}
+
+		// In Y Direction
+		ballY += ballSpeedY;
+		if(ballY > canvas.height || ballY < 0)
+		{
+			ballSpeedY = -ballSpeedY;
+		}
+	}
+
+	function drawNet(){
+		for(var i =0; i< canvas.height; i+=40){
+			colorRect((canvas.width/2)-1, i, 2, 20, 'white');
+		}
+	} 	
+
+	function drawEverything(){
+
+		// black canvas
+		colorRect(0,0,canvas.width,canvas.height,'black');
+		//winning screen shit
+		if(showingWinScreen){
+			canvasContext.fillStyle = 'white';
+			if(player1Score >= winning_score){
+			canvasContext.fillText("You Won", 400,200);
+		}
+		else if(player1Score <= winning_score){
+				canvasContext.fillText("You Lost", 400,200);}
+			canvasContext.fillText("click to continue",350,500);
+			return;
+		}
+
+		drawNet();
+		// left paddle
+		colorRect(0,paddle1Y, paddleThickness,paddleHeight,'white');
+		// right computer paddle
+		colorRect(canvas.width - paddleThickness ,paddle2Y, paddleThickness ,paddleHeight,'white');		
+		// the fuckin' ball 
+		colorCircle(ballX, ballY, 10, 'white');	
+
+		canvasContext.fillText(player1Score, 100, 100);
+		canvasContext.fillText(player2Score, canvas.width-100, 100);
+	}
+
+	//colorCircle function for making the ball
+	function colorCircle(centerX, centerY, radius, color){
+		canvasContext.fillStyle = color;
+		canvasContext.beginPath();
+		canvasContext.arc(centerX, centerY, radius, 0, Math.PI*2, true);
+		canvasContext.fill();
+	}
+
+	// colorRect function for making the objects 
+	function colorRect(topLeft, top, width, height, drawColor){
+		canvasContext.fillStyle = drawColor;	
+		canvasContext.fillRect(topLeft , top, width, height);
+	}
+
+</script>
+
+</html>
