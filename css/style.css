@@ -6,6 +6,9 @@
   width: 100%;
   height: 100%; }
 
+#main-header .name-heading {
+  letter-spacing: 10px; }
+
 #main-header .port-item {
   width: 25%; }
   #main-header .port-item .fa {
