@@ -1,0 +1,87 @@
+.bg-black{
+  background: #000;
+  color: white;
+}
+
+
+#main-header{
+  img{
+    width: 369px;
+    height: 395px;
+  }
+
+  .port-item{
+    width: 25%;
+    .fa{
+      font-size: 2em;
+    }
+  }
+  // hover effect for port items
+  .port-item:hover{
+    opacity: 0.8;
+    cursor: pointer;
+  }
+}
+
+body{
+background: #ddd;
+}
+
+#contact{
+  textarea{
+    height: 150px;
+  }
+  .toedit{
+    height: 150px;
+  }
+}
+
+
+// writing media queries for space indent problem on xl-large screens
+@media(min-width:1199px){
+  .port-item{
+    padding: 3em !important;
+  }
+  .name{
+    font-size: 2em;
+  }
+}
+// media query for adjusting size of name
+@media(min-width: 978px){
+  .name{
+    font-size: 1.6em;
+  }
+}
+// media query for adjusting size of name
+@media(max-width:479px){
+  .name{
+    h1{
+      font-size: 48px !important;
+    }
+  }
+  .fa{
+    padding-left: 8px !important;
+  }
+}
+// media query for adjusting size of name
+@media(max-width:319px){
+  .name{
+    h1{
+      font-size: 42px !important;
+    }
+  }
+  .fa{
+    padding-left: 8px !important;
+  }
+}
+// media query for adjusting size of name
+@media(max-width:736px){
+  .name{
+    h1{
+      font-size: 58px !important;
+    }
+  }
+  .fa{
+    padding-left: 10px !important;
+  }
+}
