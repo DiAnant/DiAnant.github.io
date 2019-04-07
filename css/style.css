@@ -9,3 +9,18 @@ body{
     background-size: cover;
 }
 
+@media screen and (max-width: 720px) {
+    #hello{
+    padding-top: 35%;
+    color: white;
+    font-size: 6em;
+    font-weight: bolder;
+}  
+}
+
+.hello{
+    padding-top: 20%;
+    color: white;
+    font-size: 8em;
+    font-weight: bolder;
+}
