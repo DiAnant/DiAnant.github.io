@@ -84,3 +84,26 @@ hr{
     font-size: 22px;
     padding-bottom: 2%;
 }
+
+#aboutMeContainer{
+    padding-top: 5%;
+    font-size: 1.5em;
+}
+
+#twitter{
+    color: blue;
+}
+
+#github{
+    color: black;
+}
+
+#quora{
+    color: #b0271e;
+}
+
+#email{
+    font-size: 22px;
+    color: darkred;
+    font-weight: lighter;
+}
