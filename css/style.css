@@ -1,12 +1,10 @@
-.mynav {
-    font-family: 'arvo',serif;
-    opacity: .80;
+html{
+    scroll-behavior: smooth;
 }
 
-body{
-    background-image: url("home.png");
-    background-repeat: no-repeat;
-    background-size: cover;
+.mynav {
+    font-family: 'arvo',serif;
+    opacity: .99;
 }
 
 @media screen and (max-width: 720px) {
@@ -14,8 +12,7 @@ body{
     padding-top: 35%;
     color: white;
     font-size: 6em;
-    font-weight: bolder;
-}  
+    font-weight: bolder;}
 }
 
 .hello{
@@ -23,4 +20,67 @@ body{
     color: white;
     font-size: 8em;
     font-weight: bolder;
+}
+
+#main-page{
+    
+/*    background-image: url("home.png");*/
+    background-color: black;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 720px;
+}
+
+
+#projects{
+    font-family: 'arvo',serif;
+    background-color:white;
+    min-height: 750px;
+    padding-bottom: 5%;
+}
+
+#blog{
+    background-color: black;
+    min-height: 750px;
+    color: white;
+    font-family: 'arvo',serif;
+}
+
+#aboutMe{
+    background-color: white;
+    color: black;
+    min-height: 750px;
+    font-family: 'arvo',serif;
+}
+
+#projectsHeading{
+    padding-top: 6%;
+    font-size: 4em;
+}
+
+#projectsContainer{
+    padding-top: 7%;
+}
+
+.projectTopic{
+    min-height: 150px;
+}
+
+.projectPara{
+    font-size: 1.2em;
+}
+
+hr{
+    border: 1px solid dimgray; 
+    width: 85%;
+}
+
+.projectButton{
+    margin-top: 1%;
+    margin-bottom: 2%;
+}
+
+#subheading{
+    font-size: 22px;
+    padding-bottom: 2%;
 }
