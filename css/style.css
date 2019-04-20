@@ -13,6 +13,11 @@ html{
     color: white;
     font-size: 6em;
     font-weight: bolder;}
+    
+    #aboutMeContainer{
+    padding-top: 5%;
+    font-size: 1.2em;
+}
 }
 
 .hello{
@@ -106,4 +111,8 @@ hr{
     font-size: 22px;
     color: darkred;
     font-weight: lighter;
+}
+
+.icon{
+    padding-bottom: 8%;
 }
