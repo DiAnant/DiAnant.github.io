@@ -133,7 +133,27 @@
             </div> <br><br><br><br><br><br>
             
             <div id="multi">
-                
+                <h5>
+                    Now we'll implement <b>Multiple Linear Regression.</b> If you have payed attention to what we did above in <b>Simple Linear Regression,</b> it's going to be a piece of cake for you. Everything we are going to be do here is already been implemented above already. So to follow along with the Multiple Linear Regression code, you should download the dataset which we're going to use. Click <a href="data/dataset2.csv" download="dataset2.csv">here</a> to download the dataset. 
+                </h5> <br><br>
+                <script src="https://gist.github.com/DiAnant/314ef03e0cc4d56d5572e6fe8c3c8cc8.js"></script> <br><br>
+                <h5>Here we imported necessary libraries for implementation of our model and also imported data into DataFrame. You'll need to enter the path of the 'dataset.csv' file in your computer at the place of 'FILE PATH'. Now we'll use data.head() to print first few rows of our dataframe.</h5> <br><br>
+                <div align="center"><img src="images/data2.PNG" class="image" alt="datarfame.head()"></div> <br><br> 
+                <script src="https://gist.github.com/DiAnant/f36b380f7345f399b4fec3d095818446.js"></script> <br><br>
+                <h5>In this step we normalized our data. This is a super - important step. Sometimes our data values are of totally different orders, like number of bedrooms and price of house. This type of data can really make our algorithm suffer so what we do is to make our data of same order is to <b>Normalize</b> it. There are a few common normalizing methods which are generally used like, <br> <div align="center">
+                    ( data - data.mean() ) / data.std() </div>
+                In the rest of the code we took the values from dataframe and made numpy arrays of them representing features and labels, i.e. matrix X and matrix Y. 'm' is the number of examples and 'n' is the number of features. </h5> <br> <br>
+                <script src="https://gist.github.com/DiAnant/5ddb58fdc6be4e30518873243673a9f9.js"></script> <br><br>
+                <h5>
+                    In this step we appended a column of ones to our feature matrix.
+                    Then we chose the values of learning rate 'alpha' and number of iterations 'epochs'. We initialized our theta vector which is of shape (n+1,1). We defined our cost function for this model and calculated the cost of our model on the initial_theta values. Cost with initial theta should be equal to 0.489, if you are getting same result, you are good to go. Finally we initialized a costHistory list in which we'll store the cost of our model for each iteration.
+                </h5> <br> <br>
+                <script src="https://gist.github.com/DiAnant/8fbfe5d3f44bd535985d12fafc7ad207.js"></script> <br><br>
+                <h5>In this section of code we defined the loop for gradient descent. This gradient descent function is exactly same as it was in <b>Simple Linear Regression.</b> We calculated our finalPredictions by using the values of the learned parameters theta. The final cost after gradient descent is found to be <b>0.130</b> .</h5> <br><br>
+                <script src="https://gist.github.com/DiAnant/d33c499f37d649c56dbc83e2520495de.js"></script> <br><br>
+                <h5>Above code will plot a 'Cost Vs Epochs' Graph and it will give us an accurate idea of when our gradient descent function converges.</h5> <br><br>
+                <div align="center"><img src="images/plot2.PNG" class="image" alt="costVSepochs"></div> <br><br> 
+                <h5> So this was our <b>Multiple Linear Regression</b> model which was pretty similar to the Simple Linear Regression except a few things. We can not always plot the Multiple Linear Regression Model as the dimensions of our features could be a large number (greater than 3) which will make it impossible for us to visually represent our Regression Line.</h5>
             </div> <br><br><br><br><br><br>
             
             <div id="regular">
