@@ -22,27 +22,10 @@ hr{
     font-size: 38px;
 }
 
-#section{
-    font-size: 1.2em;
-    padding-bottom: 10%;
-}
-
-h5{
-    line-height: 1.5em;
-}
-
-ul{
-        list-style: none;
-}
-
 
 @media screen and (max-width: 720px) {
     #heading{
     padding-top: 20%;
-    font-size: 23px;
-    }
-    
-    .image{
-        width: 350px;
+    font-size: 24px;
     }
 }

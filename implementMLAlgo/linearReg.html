@@ -48,7 +48,97 @@
             <hr>
             <br><br><br><br><br><br>
         <div class="container">    
+            <div id="section">
+                <h4>This post on Linear Regression is divided in several section. If you are here for some particular section, please select a link from below and go directly to that section.</h4><br>
+                <ul>
+                    <li><a href="#basics">Basics of Linear Regression</a></li>
+                    <li><a href="#single">Simple Linear Regression</a></li>
+                    <li><a href="#multi">Multiple Linear Regression</a></li>
+                    <li><a href="#regular">Regularized Linear Regression</a></li>
+                </ul>
+            </div> <br><br><br>
             
+            <div id="basics">
+                <h5>Linear Regression is a statastical approach to finding the relationship between a target and its one or more predictor valuables. Let's take the famous example of housing prices prediction. We are given sizes of houses in (sqft) and their corresponding prices. With this given information we try to predict prices of houses whose sizes are provided to us. This is called <b>Simple Linear Regression.</b> <br><br> But house prices may not only depend on the size of the houses. They are several other factors which may act as variables for the house prices we are trying to predict. It can be number of bedrooms in a house, if the house has a garage or not etcetera etcetera. When the number of predictor variables becomes more than one, our model is called <b>Multiple Linear Regression.</b><br><br><br>Here below let's look at an example of housing prices data.</h5>
+                
+                <div align="center"><img src="images/housing1.PNG" class="image" alt="Housing Price Prediction Data"></div> <br><br>
+                
+                <h5>So, let's try to apply simple linear regression to above data. Initially, I'll choose a random line and apply it to our data and see how things go.</h5> <br><br>
+                
+                <div align="center"><img src="images/housing2.PNG" class="image" alt="Housing Price Prediction Data"></div> <br><br> 
+                
+                <h5>What I did above was to fit a random line to our data and because our data is not so complex we can clearly see that this is not a good fit. Infact, it's pretty bad. So do we have a mathematical real valued number which can show that exactly "how" bad is our fit?</h5> <br><br>
+                
+                <div align="center"><img src="images/housing3.PNG" class="image" alt="Housing Price Prediction Data"></div> <br><br> 
+                
+                <h5>The Green lines in the above picture give us a clear idea of how "bad" or "good" our fit is. Green lines are difference between the actual value and the value predicted by our model. <b>So, in short, lesser the length of green lines in our data, better will be our model.</b> This green length is called the "cost" of our regression model. Therefore, the <b>cost function</b> in our code will kinda compute the cost of our model at a particular time. We'll also make an algorithm which will reduce "cost" of our model called <b>gradient descent.</b></h5>  <br><br>                                           
+                
+                <div align="center"><img src="images/housing4.PNG" class="image" alt="Housing Price Prediction Data"></div> <br><br> 
+                
+                <h5>The regression line plotted above is the best fit to our data. By looking at the green lines we can clearly see that the "cost" of our model has significantly reduced. This optimum fit was achieved by the gradient descent algorithm. Now below we'll see the mathematical formulae used to calculate the cost of the model at a particular instance.</h5> <br><br><br>
+                
+                <div align="center">
+                    <h3>y = c + mx</h3>
+                    <img src="images/cost1.PNG" class="image" alt="Cost Function">
+                </div>  <br><br>                                                                                                                           <h5>So h(x) is our <b>hypothesis</b> function and is used to calculate predictions based on current values of theta which are parameters of the model. Theta_0  is the interecpt of our regression line whereas Theta_1 is its slope.</h5> <br><br>
+                
+                 <div align="center"><img src="images/cost2.PNG" class="image" alt="cost fucntion"></div> <br><br> 
+                 
+                 <h5>This cost function used for linear regression is also called mean-squared error function. This function calculates error for each example i.e. is the square of the length of the green line. So cost is just the sum of the square-error for each example divided by two times the number of examples 'm'.</h5> <br><br>
+                 
+                 <div align="center"><img src="images/cost3.PNG" class="image" alt="cost fucntion"></div> <br><br> 
+                
+                <h5>The above function is the gradient descent parameter function. This function is used to update the parameters 'theta' on each iteration of gradient descent. Here 'alpha' is our learning rate which is just a value that signifies how 'big steps' we want to take in order to find the global minima of our cost function. <br><br>
+                When we try to code this, we try to minimize use of 'for loops' as much as possible if want a neat and fast implementation. Instead we take help of linear algebra and use vectors and matrices to do our calculations. We'll use Python's numpy package to assist us in this regard.</h5> <br><br><br><br><br><br><br>
+            </div>
+            
+            
+            <div id="single">
+                <h5>If you wish to follow along you can download the data by cliking <a href="data/dataset1.csv" download="dataset1.csv">here.</a> This is the housing price prediction data and is labelled as 'x' and 'y'. Now follow along the steps below to load this data into a numpy array.</h5>
+                <br><br>
+                <script src="https://gist.github.com/DiAnant/d27427db1786b806f470eecda43a56a9.js"></script>
+                <br> <br> 
+                <h5>
+                    The shape of our numpy arrays is (m,1) and (m,1) for x and y respectievly. In our code 'm' is the 'number of examples' and 'n' is the number of features.
+                </h5>  
+                <br><br>
+                <script src="https://gist.github.com/DiAnant/042af4f70d5425e6e934f158a8ce7387.js"></script>
+                <br><br>
+                <h5>Here we'll see a scatter plot of our training data.</h5>
+                <br><br>
+                 <div align="center"><img src="images/data1.PNG" class="image" alt="training data"></div> <br><br> 
+                 <h5>
+                     Now we need to add an array of ones to our feature vector so that our feature vector could have a (m,n+1) shape. We'll also set the values of alpha and number of iterations for gradient descent which we'll call 'epochs'. And finally, we'll initialize our theta vector which contains our parameters and its shape will be (n+1,1).
+                 </h5>  <br><br>
+                <script src="https://gist.github.com/DiAnant/6a656cbf388e5393174f0d37e280e45b.js"></script> <br><br>
+                <h5> Now we'll make our costFunction() which will calculate for us the cost of our regression model at any instance we want. We'll also calculate the cost with initialized_theta vector and it must equal to 32.07, if you get this answer it means your code is working fine till now. </h5> <br><br>s
+                <script src="https://gist.github.com/DiAnant/36fc0d87c44b8095263124851f3f25bb.js"></script>      <br><br>
+                <div align="center"><img src="images/cost4.PNG" class="image" alt="initial cost"></div> <br><br> 
+                <h5>
+                We'll intialize a 'costHistory' list which will come in handy later to plot the 'cost VS epochs' graph. <br>
+                And we'll do the gradient descent optimization by creating a for loop that iterates for times equal to 'epochs'. In the gradient descent implementation, we have done same thing as shown in the above mathematical relation but it's been implemented using numpy arrays. I suggest you take out a paper and pencil and figure out the dimensions of the matrices invloved and make your code for this part. 
+                </h5> <br><br>
+                <script src="https://gist.github.com/DiAnant/57dec6c9a5fa49afa7ca2d0fb37dd125.js"></script> <br><br>
+                <h5>
+                    Here using our trained parameters which are now stored in 'theta' variable we'll create a 'finalPrediction' matrice which will contain the predictions of all the examples according to our linear model. We'll plot this using matplotlib.pyplot and we'll be able to see our predicted regression line. And we'll print the cost of our model during the last iteration.
+                </h5> <br><br>
+                <script src="https://gist.github.com/DiAnant/e7bbae1f0fcea3a21028ada1464028c7.js"></script> <br><br>
+                <div align="center"><img src="images/line1.PNG" class="image" alt="regression line"></div> <br><br> 
+                <h5>
+                    Now we'll plot a 'Cost VS Epochs' graph which will show how cost converges with number of iterations. This will help us to decide a better value for our learning rate 'alpha' and number of iterations 'epochs'.
+                </h5> <br><br>
+                <script src="https://gist.github.com/DiAnant/cfde618670edc03bbd5283eeb671513f.js"></script> <br><br>
+                 <div align="center"><img src="images/plot1.PNG" class="image" alt="regression line"></div> <br><br> 
+                 <h5>This shows us that our cost function has converged around 1300 iterations and its not exactly making any difference after this with the choosen value of learning rate 'alpha'.</h5> <br><br>           
+            </div> <br><br><br><br><br><br>
+            
+            <div id="multi">
+                
+            </div> <br><br><br><br><br><br>
+            
+            <div id="regular">
+                
+            </div>
         </div>
         
     <!-- Optional JavaScript -->
