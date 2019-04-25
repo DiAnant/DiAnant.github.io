@@ -50,7 +50,148 @@
             <hr>
             <br><br><br><br><br><br><br>
         <div class="container">    
- 
+            <h5>
+                This post is divided into a few sections and if you are here for a particular section, please select a link from below to go there.
+            </h5> <br>
+            <ul id="section">
+                <li>
+                    <a href="#basics">Logistic Regression Basics</a>
+                </li>
+                <li>
+                    <a href="#binary">Binary Logistic Regression</a>
+                </li>
+                <li>
+                    <a href="#regular">Regularized Logistic Regression</a>
+                </li>
+            </ul> <br><br><br><br><br>
+             <div id="basics">
+                 <h5>For understanding Logisitic Regression, we'll keep up with our motivating example of housing prices prediction. In Linear Regression we had to predict the price of a house given the its size. It means, that our 'value to be predicted' i.e. 'house price' can take infinite values depending on the size of house we provide. <br> Logistic Regression differs from Linear Regression in this regard. In Logisitic Regression instead of predicting values from an Infinite Set, we choose values from a well defined set. This set generally has a only a few classes. This property of Logistic Regression makes it well suitable for Classification tasks. <br><br>In <b>Binary Logistic Regression</b>, we try to classify our data into two classes. An example for binary logistic regression can be any classification task like, 'to tell if a given image is of a cat or a dog' or 'to tell if a given email is a spam or not'. </h5> <br>
+                 <h5>
+                     Where as in <b>Multinomial Logistic Regression</b> we try to classify our data into more than two features, generally. A popular example will be Handwritten Digit Classification using MNIST dataset. In such a situation we'll want to classify a digit into ten possible classes i.e. digits from 0 to 9. 
+                 </h5> <br>
+                 <h5>
+                     You will need to download <a href="data_1/dataset1.csv" download="dataset1.csv">this</a> dataset, if you wish to follow along. The dataset describes the scores of two tests taken by a batch of students and if they pass or fail. 0 denotes 'student not admitted' and 1 denotes 'student admitted'. Here is a snapshot of our data.
+                 </h5> <br><br>
+                 <div class="image" align="center">
+                     <img src="images/data3.PNG" alt="dataframe.head()">
+                 </div> <br><br>
+                 <h5>
+                     Now what we want to do is train our model to predict if a student is 'admitted' or 'not admitted' given their scores in two tests. So here is a plot of our data.
+                 </h5> <br><br>
+                 <div class="image" align="center">
+                     <img src="images/data4.PNG" alt="data" width="45%" height="55%">
+                 </div> <br><br>
+                 <h5>
+                     Now our aim is to find a simple decison boundary that will classify our data into two classes. This will complete our model and we'll be able to give a prediction for new cases. Our decision boundary should look something like this.
+                 </h5> <br><br>
+                 <div class="image" align="center">
+                     <img src="images/data5.PNG" alt="data" width="45%" height="55%">
+                 </div> <br><br>
+                 <h5>
+                     In this case this linear decision boundary will more or less do the job for us. Achieving this decision boundary is the main aim of our algorithm. <br><br> Let's overview implementation of Logistic Regression. Because we need to classify our data into classes if (if our prediction is 1 or 0), we'll use an <b>activation function</b> which will try to classify our predictions into one of these two classes. The kind of activation we'll use here is called <b>Sigmoid Function</b>. It's most of the time the best choice to use as an activation function for logistic regression. Here's our sigmoid function. 
+                 </h5> <br><br>
+                 <div class="image" align="center">
+                     <img src="images/plot3.PNG" alt="data" width="60%" height="55%">
+                 </div> <br>
+                 <div class="image" align="center">
+                     <img src="images/sigmoid.png" alt="data" id="im4">
+                 </div> <br><br>
+                 <h5>
+                     We'll calculate our hypothesis just like in linear regression but this time we will calculate sigmoid() of our predictions. Our prediction matrix will be h(x). 
+                 </h5>    <br>
+                 <div class="image" align="center">
+                     <img src="images/prediction.PNG" alt="data" id="im3">
+                 </div> <br><br>
+                 <h5>Now let's look at the cost function we'll use for our logistic regression model.</h5> <br>
+                 <div class="image" align="center"> 
+                     <img src="images/cost5.PNG" alt="data" id="im2">
+                 </div> <br><br>
+                 <h5>
+                     This will be our gradient function.
+                 </h5>
+                 <div class="image" align="center"> 
+                     <img src="images/grad.PNG" alt="data" id="im1">
+                 </div> <br><br> 
+             </div> <br><br><br><br><br><br>
+             
+             
+            <div id="binary">
+                 <br><br><br>
+                  <h5>Now let's look at the code for <b>Binary Logistic Regression</b> model for dataset described above.</h5> <br><br>
+                 <script src="https://gist.github.com/DiAnant/be62a3a5579e36495b42f350cd4fc6c4.js"></script> <br><br>
+                <h5>
+                    In the above code we imported all the necessary libraries and stored data from CSV file into a dataframe using pandas and then stored the features and labels into dataframes X and Y respectively.
+                </h5> <br><br>
+                <script src="https://gist.github.com/DiAnant/3d99b82f235da651536ec62c105cebc0.js"></script> <br><br>
+                <h5>In above code we mean normalized our data. We also found out the values of m and n i.e. number of examples and number of features respectively. We then stored our data from dataframes into numpy matrices x and y.</h5> <br><br>
+                <script src="https://gist.github.com/DiAnant/ec9a68c0df40c8c71c3eb8c534cd8432.js"></script> <br><br>
+                <h5>
+                    In this step we made necessary arrangements to plot the below graph through matplotlib.pyplot.
+                </h5> <br><br>
+                 <div class="image" align="center"> 
+                     <img src="images/plot4.PNG" alt="data" id="im5">
+                 </div> <br><br>
+                 <script src="https://gist.github.com/DiAnant/75c34bdf2c4e6f3fda5cd22575f94d9b.js"></script> <br><br>
+                 <h5>Above code will append a column of ones to our feature matrix. It will also intialize a theta vector of shape (n+1,1). </h5> <br><br>
+                 <script src="https://gist.github.com/DiAnant/56142ab3c8cc958f1451386d7140ebcd.js"></script> <br><br>
+                 <h5>In the above code we defined a sigmoid function and the cost function for logistic regression. We'll use initial value of theta vector and calculate initial cost and initial gradient.</h5> <br><br>
+                 <script src="https://gist.github.com/DiAnant/4404afb0c58be1d793f771a20ca1d49e.js"></script> <br><br>
+                 <h5>This code will initialize alpha and epochs variable and also the costHistory list which will be used to plot the 'cost vs epochs' graph later. Then we'll implement the <b>gradient descent</b> loop as we described in the mathematical relation above.</h5> <br><br>
+                 <script src="https://gist.github.com/DiAnant/35b87300d5cd40127d705f3fd892d0de.js"></script> <br><br>
+                 <h5>Now we have or final predictions vector. We have our trained parameters. The first part of the code will also plot our 'cost vs epochs' graph. It will look something like this.</h5> <br><br>     
+                 <div class="image" align="center"> 
+                     <img src="images/plot5.PNG" alt="data" >
+                 </div> <br><br> 
+                 <h5>Plotting The decision boundary.</h5>
+            <!--binary end-->
+            </div>
+            <br><br><br><br><br><br><br><br><br>
+
+            <div id="regular">
+                <h5>Okay, enough about Simple Logistic Regression. Now Let's introduce <b>regularization</b> in our model. Imagine we have a <a href="data_1/dataset2.csv" download="dataset.csv">dataset</a> like the visulization shown below.</h5> <br> <br>
+                  <div class="image" align="center"> 
+                     <img src="images/data6.PNG" alt="data" >
+                 </div> <br><br> 
+                 <h5>Can we use a linear decision boundary to classify this data? Clearly, we can't. So to make this happen we'll use feature mapping in order to produce polynomial features which may probably produce a decision boundary with which we'll be able to classify our data. Like this maybe.</h5> <br><br>  
+                 <div class="image" align="center"> 
+                     <img src="images/data7.PNG" alt="data" >
+                 </div> <br><br> 
+                 <h5>Now when we generate polynomial features of high degrees, sometimes we obtain decesion boundary likes these.</h5> <br><br>
+                 <div class="image" align="center"> 
+                     <img src="images/data8.PNG" alt="data" >
+                 </div> <br><br> 
+                 <h5>Now this fit looks really good. But can it make good predictions? Actually it can't. The higher order polynomial features we generated, found a super-awesome decision boundary which fits the training data amazingly well but its not able to generalize it's predictions. And hence it won't do so good on the test set. It's like a kid who cramped all the math problems only to discover that he cannot do any problems which even slightly diifer from the problems he mugged. And this is where <b>regularization</b> comes to rescue.</h5> <br><br>
+                 <div class="image" align="center"> 
+                     <img src="images/regcost.PNG" alt="data" >
+                 </div> <br> 
+                 <h5 align="center">This is our regularized logistic cost function. This is exactly the same as simple logistic cost function just it has a regularization term added to it.</h5> <br><br>
+                 <div class="image" align="center"> 
+                     <img src="images/reggrad1.PNG" alt="data" >
+                 </div>
+                 <div class="image" align="center"> 
+                     <img src="images/reggrad2.PNG" alt="data" >
+                 </div> <br> 
+                 <h5 align="center"> This is our regularized gradient. <b>Note</b> we do not regularize our theta_0 term.</h5> <br><br>
+                <h5>Let's quickly look at the code for the <b>Regularized Logistic Regression</b> Implementation.</h5> <br><br>
+                <script src="https://gist.github.com/DiAnant/4b970fea810f4549e2208adb7464bdfe.js"></script> <br><br>
+                <h5>The code above is same as the code in <b>Simple Logistic Regression</b>. Now the main difference occurs when we implement costFunction() for regualrized logistic regression.</h5> <br><br>
+                <script src="https://gist.github.com/DiAnant/7e1ae6b80de828da6970a9371c28a4b9.js"></script> <br><br>
+                <h5>Our cost function is also same as above just that it has a regularization term added to it and we have made sure to not regularize the theta_0 term.</h5> <br><br>
+                <script src="https://gist.github.com/DiAnant/60274f511aef30dc1d36c3a7e336f17b.js"></script> <br><br>
+                <h5>This part of our code deals with generation of polynomial features. If you want to know more about generation of polynmial features, I suggest you should read my post on <a href="https://dianant.github.io/implementMLAlgo/polynomialReg.html" target="_blank">Polynomial Regression.</a></h5> <br><br>
+                <script src="https://gist.github.com/DiAnant/a54a014e93292e0df70ff2a8c9d9645b.js"></script> <br><br>
+                <h5>In this part we initialize our hyperparameters (learning_rate,epochs,lambda) and implement the gradient descent for loop. Finally, we also implement a 'cost VS epochs' plot.</h5><br><br> 
+                 <div class="image" align="center"> 
+                     <img src="images/data9.PNG" alt="data" >
+                 </div> <br> 
+                 <div class="image" align="center"> 
+                     <img src="images/plot6.PNG" alt="data" >
+                 </div> <br> 
+                <h5 align="center">This is the output of our code. We are able to significantly reduce the cost of our model.</h5>
+                <br><br><br>
+                <h5>Decision boundary for regularized logistic regression.</h5>
+            </div> <br><br><br><br><br><br><br><br><br>
+    <!--container-->
         </div>
         
     <!-- Optional JavaScript -->

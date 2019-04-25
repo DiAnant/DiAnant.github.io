@@ -28,4 +28,46 @@ hr{
     padding-top: 20%;
     font-size: 24px;
     }
+    
+    .image{
+        width: 350px;
+    }
+}
+
+#section{
+    font-size: 1.2em;
+    padding-bottom: 10%;
+}
+
+h5{
+    line-height: 1.5em;
+}
+
+ul{
+        list-style: none;
+}
+
+#im1{
+    width="35%";
+    height="13%";
+}
+
+#im2{
+    width="70%"; 
+    height="15%";
+}
+
+#im3{
+    width="21%";
+    height="12%";
+}
+
+#im4{
+    width="21%";
+    height="12%";
+}
+
+#im5{
+    width: 38%;
+    height: 50%;
 }
