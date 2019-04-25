@@ -50,10 +50,36 @@
             <hr>
             <br><br><br><br><br><br><br>
         <div class="container">    
-             
-             
-             
+        
+        <div class="image" align="center"> 
+        <img src="images/data6.PNG" alt="data" >
+        </div> <br><br> 
+        <h5>Can we use a linear decision boundary to classify this data? Clearly, we can't. So to make this happen we'll use feature mapping in order to produce polynomial features which may probably produce a decision boundary with which we'll be able to classify our data. Like this maybe.</h5> <br><br>  
+        <div class="image" align="center"> 
+        <img src="images/data7.PNG" alt="data" >
+        </div> <br><br> 
+        <h5>Okay, Let's give it a shot. We'll try to classify this data using a linear decision boundary and see how things go. Following will be our code for implementing a linear decision boundary on this dataset.</h5> <br><br>
+        <script src="https://gist.github.com/DiAnant/aa8a41d9419dfe2125ffe89341e86fed.js"></script> <br><br>
+        <h5>With this code we'll be obtain 'cost vs iterations' graph which will show us that exactly how good is our decision boundary.</h5> <br><br>
+        <div class="image" align="center"> 
+        <img src="images/plot7.PNG" alt="data" >
+        </div> <br><br> 
+        <h5 align="center">This graph clearly shows us how bad our decision boundary is. Cost of the model has barely reduced.</h5>
+        <br><br>
+        <h5>Now let's try to implement polynomial regression and see if there's any improvement.</h5> <br><br>
+        <script src="https://gist.github.com/DiAnant/cd701282cf9e5140c70336bd657e6b06.js"></script> <br><br>
+        <h5><b>This code is in continuation with the above block of code.</b> In this part of code we have generated polynomial features and used them to create a decision boundary. Let's see if this decision boundary is able to reduce cost of our model or not.</h5> <br><br>
+        <div class="image" align="center"> 
+        <img src="images/plot8.PNG" alt="data" >
+        </div> <br><br> 
+        <h5 align="center">This is way way better than the linear decision boundary. Cost of our model has reduced drastically.</h5> <br><br>
+        <h5>Important takeaway from this post is <b>generation of polynomial features.</b> We can generate polynomial features like we did above using a self made implementation. But this is not generalized. It can only generate polynomial features for a model which has only two features initially. We'll have to implement another function if we want it to work on different datasets with different number of features. <br><br>Hence, we'll use implementation of polynomial features from a library called scikit-learn.</h5> <br><br>
+        <script src="https://gist.github.com/DiAnant/e1aaba200e351e44dce7fb22a33ffcb9.js"></script> <br><br>
+        <h5 align="center">The above code snippet shows us how can we implement feature generation through scikit-learn.</h5>
+        <br><br>
+        <hr>
         <!--container-->
+        <br><br>
         </div>
         
     <!-- Optional JavaScript -->
