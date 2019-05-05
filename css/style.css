@@ -10,7 +10,7 @@ html{
 @media screen and (max-width: 720px) {
     #hello{
     padding-top: 35%;
-    color: white;
+    color: #fddf01;
     font-size: 6em;
     font-weight: bolder;}
     
@@ -22,7 +22,7 @@ html{
 
 .hello{
     padding-top: 20%;
-    color: white;
+    color: #fddf01;
     font-size: 8em;
     font-weight: bolder;
 }
@@ -63,7 +63,15 @@ html{
     font-size: 4em;
 }
 
+.darklink{
+    color: #fddf01;
+}
+
 #projectsContainer{
+    padding-top: 7%;
+}
+
+#blogContainer{
     padding-top: 7%;
 }
 
