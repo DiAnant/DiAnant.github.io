@@ -46,11 +46,50 @@
 
         
 <!--           heading-->
-            <h1 align="center" id="heading">Implementing K-Means Clustering Algorithm In Python/Numpy</h1>   
+            <h1 align="center" id="heading">K-Means Clustering Algorithm</h1>   
             <hr>
-            <br><br><br><br><br><br><br>
+            <br><br><br><br><br><br>
         <div class="container">    
- 
+             <h5>K-Means clustering is an Unsupervised Learning Algorithm. In this post, we will apply K-Means on a simple 2D dataset so that we can generate some real nice visualizations. We'll also understand what happens behind the scenes. <br><br> Our dataset looks like this. <br></h5>
+             <div align="center">
+                 <img src="kmeans/image0.png" alt="dataset">
+             </div> <br><br>
+             <h5>Because this is a simple dataset, we can clearly locate that their are five clusters in this dataset. These clusters are,</h5> <br>
+             <div align="center">
+                 <img src="kmeans/clusters.png" alt="clusters">
+             </div> <br><br>
+             <h5>But now we want to create an algorithm which will do this task for us. To follow along you can download this dataset from <a href="kmeans/dataset.csv" download>here.</a></h5> <br>
+             <h5><u>K-Means Follows a simple algorithm :</u></h5> 
+             <ul>
+                 <li>
+                     <h5>Initialize k centroids on random positions anywhere in the dataset.</h5>
+                 </li>
+                 <li>
+                     <h5>For each example in the dataset, find the closest cluster centroid and attribute that data point with that cluster centroid.</h5>
+                 </li>
+                 <li>
+                     <h5>Now find the centroid of data points attributed to the same cluster centroid, and move the cluster centroid to that position.</h5>
+                 </li>
+                 <li>
+                     <h5>Keep repeating the last two steps untill convergence is atained by the algorithm.</h5>
+                 </li>
+             </ul> <br><br><br>
+            <h5>So let's write some code for doing all the steps of the algorithm step by step.</h5>
+            <script src="https://gist.github.com/DiAnant/0195cc46e0015f5ca4d94466cd3a9580.js"></script> <br>
+            <h5>This well commented code above takes care of the initialization and setup steps of the algorithm. This also plots the initial state of the dataset. Which is, </h5> <br>
+            <div align="center">
+                <img src="kmeans/image0.png" alt="intial_data">
+            </div> <br> <br>
+            <script src="https://gist.github.com/DiAnant/8ad84fd67df996bbc0c144e3bb844cf8.js"></script> <br>
+            <h5>This above code deals with the 'finding centroid' and 'move centroid' steps of the algorithm. After about 15 epochs, it was observed that the algorithm had totally converged as no more data points were changing colors. Here's the plot of the dataset after completion of the algorithm.</h5> <br>
+            <div align="center">
+                <img src="kmeans/image9.png" alt="clustered_dataset">
+            </div> <br><br>
+            <h5>And here's a GIF image which will show us transition of our dataset from un-clusterd to fully clustered.</h5> <br>
+            <div align="center">
+                <img src="kmeans/animation.gif" alt="GIF">
+            </div> <br> <h5>And here's the full code for the K-Means clustering algorithm written for this dataset.</h5> <br>
+            <script src="https://gist.github.com/DiAnant/32b648965d463909ffd9b6810b50adeb.js"></script> <br><br><hr> <br>
         </div>
         
     <!-- Optional JavaScript -->
