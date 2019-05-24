@@ -1,0 +1,221 @@
+<html lang="en">
+  
+   
+   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Feedforward Neural Networks</title>
+
+    <!--linking css-->
+    <link rel="stylesheet" href="css/feedforward.css"class="css">
+    <!--linking font-->
+    <link href="https://fonts.googleapis.com/css?family=Arvo:400,700" rel="stylesheet">
+    <!--linking fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+
+
+<body>
+
+    <!--    making a navbar-->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark mynav">
+        <a class="navbar-brand font-weight-bold" href="https://dianant.github.io/">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse mr-100" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto mr-10">
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#projects">Projects<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#blog">Blog</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#aboutMe">About Me</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    
+    <!-- Navbar Ends-->
+
+        
+<!--           heading-->
+            <h1 align="center" id="heading" class="darklink">Feedforward Neural Nets</h1>   
+            <hr>
+            <br><br><br><br><br><br><br>
+        <div class="container">    
+         
+             <h5 class="lineh">The most common application of neural networks taught to beginners in the field is of handwritten digits recognition by using MNIST dataset. You could simply use a popular deep learning framework like Tensorflow or PyTorch and code up a recognizer in like 2-3 minutes but do you understand what happens inside the model. How just supplying some matrices/tensors to a model it acquires this ability to recognize handwritten digits? Let’s find out.</h5> <br><br><br>
+             
+             <h5 class="lineh"><b>Note:</b>  I myself have learnt about this subject from Michael Nielson’s excellent <a class="darklink" href="http://neuralnetworksanddeeplearning.com" target="_blank">book</a> and Andrew Ng’s deep learning <a class="darklink" href="https://www.coursera.org/specializations/deep-learning" target="_blank">specialization</a>. I feel that Michael’s implementation of Feedforward net is excellent because it generalizes perfectly well compared to some other implementations of neural nets you’ll find on the internet. And I have used his approach in this code too.</h5>
+             <br><br><br>
+             
+             <h5 class="lineh">We are going to use MNIST dataset available on <a href="https://www.kaggle.com/c/digit-recognizer/data" class="darklink">Kaggle.</a> Let’s take a look at the dataset.</h5> <br>
+             
+             <div align="center" >
+                 <img src="data.PNG" alt="data">
+             </div> <br><br>
+             
+             <h5 class="lineh">
+                 The images are stored in form of rows with 785 columns each. The first column is the label of that image where as next 784 subsequent columns represent the values of the pixels of grayscale image from 0 to 255 which has been flattened out from (28*28) to (784*1).<br><br>Initially, the net which we are going to create will have 3 layers i.e. an input layer, a hidden layer and an output layer. Input layer is going to have 784 neurons, hidden layer will have, let’s say 30 neurons and output layer will have 10 neurons each representing a particular digit from 0 to 9. <br><br>
+                 So, we are going to create a Network class in which we’ll input the number of layers and number of neurons in each layer. Network class will have a constructor which will initialize random weights and biases to all the neurons of our network.<br><br>Why it’s important to randomly initialize the weights and biases? Weights and biases cannot be simply initialized to say like 0 because then in the output layer, the influence of all the neurons will be same and our neural net will be utter trash. For knowing why this happens you’ll have to follow along.<br><br>So in our considered case of a neural net with 1 hidden layer with 30 neurons, our object will be [784, 30, 10]. So for a neural net as such, what will be the weights and biases? <br><br></h5>
+                 
+                 <div align="center" >
+                 <img src="net1.jpg" alt="data" width="700px">
+                 </div> <br><br>
+                 
+                 <h5 class="lineh">
+                     There will be two weight matrices here (w1) and (w2). (w1) will represent set of weights between 1st and 2nd layer of neural network and the dimension of (w1) will be equal to (dim of layer 2, dim of layer 1) i.e. (30,784). Similarly (w2) will represent the sets of weights between 2nd and 3rd layer and its dimensions will be equal to (10, 30). <br><br>And similarly we’ll initialize the biases too. The biases are defined for every layer except the input layer. So the biases (b1) and (b2) defined for layers 2nd and 3rd respectively, will have their dimensions (30, 1) and (10,1). And now we are done with the <span class="darklink">initialization part.</span><br><br>
+                    <script src="https://gist.github.com/DiAnant/33614aa9491a9fa8ff22fdb41afad47a.js"></script> <br>
+                     Now, let’s define the <span class="darklink">Feedforward function.</span> What this function very intelligently does is do the forward pass with minimal effort. <br><br>
+                     <script src="https://gist.github.com/DiAnant/c8b84de4f8425c03c5ea5440f052f147.js"></script> <br>
+                     
+                    Now comes the real deal, the <span class="darklink">Gradient Descent</span> function. We are going to implement a mini-batch gradient descent. Mini batch gradient descent can be changed into work as Batch Gradient Descent if we choose the batch size as m (number of training examples) or Stochastic Gradient Descent if we choose the batch size as 1. <br><br>
+                    <b>Note,</b> here we are actually going to implement Stochastic Gradient Descent but I chose to do it through mini-batch gradient descent because that’s a more general approach. We can alter the batch size as we wish. <br><br>
+                 </h5>
+                 
+                 <script src="https://gist.github.com/DiAnant/94a6608a194f23b19e9a562760b0d663.js"></script> <br>
+                 
+                 <h5 class="lineh">
+                     And now we'll implement the <span class="darklink">Backpropagation Function</span>  and this where all the magic happens. Backpropagation uses Caculus's chain rule as an inspiration to find the delta values for each neuron and bias in the model at a particular time. Understanding backprop can be difficult and humbling, so don't panic if you don't fully understand it at once. I recommend you watch these 4 videos in the Neural Networks <a class="darklink" href="https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi">playlist</a> of <a class="darklink" href="https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw">3Blue1Brown</a> on youtube, and suscribe to him because he's awesome. <br><br>
+                     
+                     For now we are going to use a simple cost function i.e. a <span class="darklink">Mean-Square-Error</span> function which just makes our model work reasonably well and later on we'll use a more complex function like a <span class="darklink">cross-entropy-function.</span> So here's our Mean Square Error (MSE) cost function: </h5><br>
+                     
+                     <div align="center">
+                         <img src="mse.jpg" alt="Mean Square Error Function">
+                     </div> <br><br>
+                     
+                     <h5 class="lienh"> So the cost function can be written as the function of output of our neural network as, </h5> <br>
+                     <div align="center">
+                         <img src="cost_output.PNG" alt="cost">
+                     </div> <br><br>
+                     
+                     <h5 class="lienh">
+                         Backpropagation is about understanding how changing the weights and biases in a network changes the cost function.
+                         Ultimately this means computing the following partial derivatives.
+                     </h5> <br>
+                     
+                     <div align="center">
+                         <img src="partial.PNG" alt="partial derivatives">
+                     </div> <br>
+                     
+                     <h5 class="lineh">
+                         These partial derivatives means that, How the cost function will change if we change the weights and biases of particular neuron/neurons. But to compute these partial derivatives we'll first introduce an intermediate quantity <span><img src="delta.PNG" alt="delta"></span> , delta. Delta can be understood as the error in the j'th neuron of the l'th layer. <br> So what backpropagation does is gives us a way of calculating delta and later provide us a way to compute the required partial derivatives through delta. So basically, we have 4 equations of backpropagation and one by one we are going to look into each one of them.
+                     </h5>
+                     <br><hr><br>
+                     <h4><b>Equation 1</b></h4> <br><br>
+                     <h5 class="lineh">Delta was defined as the error of a particular neuron, so</h5> <br>
+                     <div align="center">
+                         <img src="delta_def.PNG" alt="delta defined">
+                     </div> <br>
+                     <h5 class="lineh">
+                         Applying the chain rule, we can re-express the partial derivative above in terms of partial derivatives with respect to the output activations, <br>
+                     </h5>
+                     <div align="center">
+                         <img src="delta_def1.PNG" alt="delta def1">
+                     </div>
+                     
+                     <h5 class="lineh">But we know that <span><img src="sigmoid.PNG" alt="sigmoid"></span>, so the second term on the right in the above equation can be written as <span><img src="sigmoid1.PNG" alt="sigmoid"></span> and here sigma represents the sigmoid function which we are using as the activation function here. And hence our first equation is going to be,</h5> <br><br>
+                     <div align="center">
+                         <img src="delta_def2.PNG" alt="equation 1">
+                     </div> <br><br>
+                     <h5 class="lineh">
+                         <b><u>Note</u></b>, the above equation involves of two things, i.e the <span class="darklink">derivative of the cost function with respect to the activation of a neuron</span> and the<span class="darklink">derivative of the sigmoid function.</span> <br>
+                         Derivative of the MSE cost function which we have choosed with respect to the activation of a neuron is going to be equal to, <br></h5>
+                         <div align="center">
+                             <img src="mse_der.PNG" alt="mse_der">
+                         </div> <br>
+                         <h5 class="lineh">And the derivative of the sigmoid function with the help of some basic derivation and algebra it can be proved that derivative of sigmoid function is,</h5> <br>
+                         <div align="center">
+                             <img src="sigmoid_der.jpg" alt="sigmoid_der">
+                         </div> <br>
+                         <h5 class="lineh">So the vectorized implementation of the Equation 1 is going to be, </h5> <br>
+                         <div align="center">
+                             <img src="equation1.PNG" alt="equation1">
+                         </div>
+                         <div align="center">
+                             <img src="equation1_1.PNG" alt="equation1">
+                         </div>
+                     <br><hr><br>
+                     <h4><b>Equation 2</b></h4> <br><br>
+                     <h5 class="lineh">
+                         Now we'll like to have an equation which will relate error <span><img src="delta.PNG" alt="delta(l)"></span> to error in the next layer <span><img src="delta_1.PNG" alt="delta(l+1)"></span>. We can use chain rule to do that. <br>                       
+                     </h5>
+                     
+                     <div align="center">
+                         <img src="equation2_der.PNG" alt="equation2_der">
+                     </div> <br>
+                     <h5 class="lineh">Now we have a equation which relates <span><img src="delta.PNG" alt="delta(l)"></span> to <span><img src="delta_1.PNG" alt="delta(l+1)"></span>. And now we want to get rid of the partial derivatives term in the equation.</h5>
+                     <br>
+                     <div ailgn="center">
+                         <img src="equation2_der1.PNG" alt="derivation_1">
+                     </div> <br> <h5 class="lineh">Differentiating, we obtain <br></h5> <br>
+                     <div align="center">
+                         <img src="equation2_der2.PNG" alt="derivation_1">
+                     </div> <br>
+                     <h5 class="lineh">
+                         Now substitutingg these partial derivatives back into the main equation, we obtain
+                     </h5>
+                     <div align="center">
+                         <img src="equation2_der3.PNG" alt="derivation_1"><br>
+                     </div>
+                     <h5 class="lineh">Vectorized implementation of this equation will be,</h5> <br>
+                     <div align="center">
+                         <img src="equation2_der4.PNG" alt="derivation_1">
+                     </div> <br><br>
+                     
+                     <br><hr><br>
+                     <h4><b>Equation 3</b></h4> <br><br>
+                     <h5 class="lineh">Till now we have figured out an intermediate quantity called delta and have found an equation to relate change in cost with delta. We have also found an equation which relates delta(l) with delta(l+1). Now we need  equations which will relate bias and weights with delta. <br> Well as it turns out,</h5> <br>
+                     <div align="center">
+                         <img src="bias.PNG" alt="bias">
+                     </div><br> <h5 class="lineh">In vectorized form,</h5> <br>
+                     <div align="center">
+                         <img src="bias1.PNG" alt="bias">
+                     </div> <br><hr><br>
+                     <h4><b>Equation 4</b></h4> <br><br>
+                     <h5 class="lineh">Now similarly, we'll want to find a way of relating weights with delta, so that we can know how much the cost will change when we change weights of a particular neuron or neurons. <br><br>
+                     Equation (1) relates change in cost with <span><img src="delta.PNG" alt="delta"></span>. <br>
+                     Equation (2) relates weights of next layer with <span><img src="delta.PNG" alt="delta"></span>. <br>
+                     </h5> <br>
+                     <div align="center">
+                         <img src="equation12.PNG" alt="equations12">
+                     </div> <br>
+                     <h5 class="lineh">From above two equations, substituting value of <span><img src="delta.PNG" alt="delta"></span> from one equation into another, and some basic algebra then should result in this equation,</h5> <br>
+                     <div align="center">
+                         <img src="equation4.PNG" alt="equation_4">
+                     </div> <br>
+                     <h5 class="lineh">
+                         This is the fouth and final backpropagtion equation and it says that the <span class="darklink">change in weights</span> of neurons of a particular layer is equal to <span class="darklink">activation of neurons of previous layer</span> multiplied by <span class="darklink">delta of neurons of this layer.</span> <br><br> Now we can jump directly into the code for the backpropagation algorithm. One important thing to keep in mind is that backprop only deals with one example at a time irrespective of which gradient descent we are using. Gradient descent only decides the interval of examples after which to change the weights.
+                     </h5> <br><br>
+                     <script src="https://gist.github.com/DiAnant/750a4472a9c253cd89edb81df4b87655.js"></script> <br>
+                     <h5 class="lineh">
+                         The <span class="darklink">backward pass</span> step in the above code makes effient use of python's negative indices. I'll suggest you to now manually try to use the backprop function to find delta_nabla values and doing all the matrices multiplication by hand.
+                     </h5> <br><br> 
+                      <h5 class="lineh">Now, I am going to provide full code of this implementation of neural network. You can <a href="Michael Nielsen - Mini Batch Gradient Descent - FeedForward Neural Network.ipynb" class="darklink">download</a> the jupyter notebook for this too.</h5> <br>
+            <h5 class="lineh"><b><u>NOTE</u> :</b> When trying out Mini Batch Gradient Descent with batch size other than 1 and m, you will need to shuffle your. You can either do that arrangement in the Code or in the CSV file itself. I shuffled the CSV file.</h5> <br><br>
+                      
+                     <script src="https://gist.github.com/DiAnant/2dd92eb8ac6e43c3aa37ec972ef258a1.js"></script> <br><br>
+                     
+                     <h5 class="lineh">After the 12th Epoch, the accuracy on the training set was around 95% and when I tested the CSV file generated by my model on the Test Set on Kaggle, it turned out to be a little more than 93% which is pretty good considering the simplicity of our neural net and such a basic cost-function.</h5>
+                     <br><br>
+                     <h5 class="lineh">Now after looking at the code for forward pass you can probably realize why can't we initialize all the weights to 0 beacuse than all the activations for next layer will become same. <br>
+                     In the future blogs I'll write about how to improve this model's performance. <br><br>
+                     You can also <a href="notes.pdf" class="darklink" target="_blank">download</a> my handwritten notes for this blog, but you might not be able to decipher my enigmated handwriting, can't help you there. 
+                     </h5> <br><br><hr><br><br>
+        </div>
+        
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    
+</body></html>
