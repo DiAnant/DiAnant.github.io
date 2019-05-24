@@ -1,0 +1,148 @@
+<html lang="en">
+  
+   
+   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Blog Template</title>
+
+    <!--linking css-->
+    <link rel="stylesheet" href="css/style.css"class="css">
+    <!--linking font-->
+    <link href="https://fonts.googleapis.com/css?family=Arvo:400,700" rel="stylesheet">
+    <!--linking fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+
+
+<body>
+
+    <!--    making a navbar-->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark mynav">
+        <a class="navbar-brand font-weight-bold" href="https://dianant.github.io/">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse mr-100" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto mr-10">
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#projects">Projects<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#blog">Blog</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#aboutMe">About Me</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    
+    <!-- Navbar Ends-->
+
+        
+<!--           heading-->
+            <h1 align="center" id="heading" class="darklink">All Kinds of Gradient Descent's</h1>   
+            <hr>
+            <br><br><br><br><br><br><br>
+        <div class="container">    
+             <h5>
+                 Gradient Descent is an algorithm which tries to find the global optimum of a function. Here, we are interested in finding out global minima for our neural network's cost function. <br><br>
+             </h5>
+             <div align="center">
+                 <img src="grad_descent.png" alt="gradient descent">
+             </div> <br><br>
+            <h5>
+                Above is an illustration of a cost function in a 3 dimensional space. Our aim is to take small steps which will take us to the global minima. But when gradient descent takes that small step it decides the direction in which to take that small step just only on the basis of gradient at that step. <br><br>
+                As, it turns out there are a few variations of Gradient Descent we’ll find. These all differ from each other in only one regard, i.e. after how many examples the weight and bias updating is done. <br><br>
+                Let’s look at all these methods one by one with a help of a simple analogy. Suppose that there are 100 mind-training books you want to read and then apply those ideas you got from the books to your life. Well I think there can be three simple approaches to it: <br><br>
+                <span class="darklink">1)</span> You read all the 100 books in one go and then try to apply what you learnt. You will not be able to remember everything you read so you’ll probably have to keep this cycle of reading all the 100 books and applying it in your life for quite some time. Let’s say after 50 such cycles you feel confident that you’ve got all the wisdom from the books. This is called <span class="darklink">Batch Gradient Descent.</span> <br><br>
+                <span class="darklink">2)</span> You read one book, and apply those ideas to your life. Then you read the second book, apply those ideas to your life. You keep going like this and finish all the 100 books. This was quite simple, you read and then you apply. Because you know that you have applied most of the ideas that were in the books to your life already, you feel pretty confident that you will not need more than 5 such cycles to gain all the wisdom you possibly can from these 100 books. This is called <span class="darklink">Stochastic Gradient Descent.</span> <br><br>
+                <span class="darklink">3)</span> You read ‘n’ books first, then apply the ideas from those n books to your life. Then you read next n books and apply those ideas. Similarly you keep reading next n books and keep applying those ideas to your life. <br>This is called <span class="darklink">Mini-Batch Gradient Descent</span>. <br>How many times you’ll need to go through the cycle will totally depend on the value of n you choose. If you choose the value of n equal to 1, this will turn your mini batch gradient descent algorithm into Stochastic Gradient descent. If you take value of n equal to m, i.e. number of training examples, it will turn mini-batch gradient descent into Batch Gradient Descent. <br> <br>
+                Each approach has its set of advantages and disadvantages. Let's look into each one of them one by one.
+                </h5> <br><br>
+                <h4 class="darklink"><b>Batch Gradient Descent</b></h4> <br>
+                <h5>
+                   <h5><b>Advantages</b></h5> <br>
+                    <ul>
+                        <li>
+                            <h5>The path to optimum for Batch Gradient Descent is particularly noise-free. This results in a smooth transition to the optimum.</h5>
+                            
+                            <div align="center">
+                                <img src="descent.png" alt="types">
+                            </div>
+                        </li>
+                    </ul>
+                    <h5><b>Disadvanatges</b></h5>
+                    <ul>
+                        <li>
+                            <h5>Batch Gradient Descent provides a stable path to convergence but at a big cost. To make even a single step towards the convergence it will have to compute delta's (through backpropagation) for each and every example in the dataset. This makes Batch Descent particularly slow for large datasets.</h5>
+                        </li>
+                    </ul>
+                </h5> <br><br>
+                
+                <h4 class="darklink"><b>Stochastic Gradient Descent</b></h4> <br>
+                <h5>
+                    <h5><b>Advantages</b></h5>
+                    <ul>
+                        <li>
+                            <h5>The frequent updates immediately give an insight into the performance of the model and the rate of improvement. And that's probably why this variant of gradient descent is also called <span class="darklink">online machine learning algorithm.</span></h5>
+                        </li>
+                        <li>
+                            <h5>The increased model update frequency can result in faster learning on some problems</h5>
+                        </li>
+                        <li>
+                            <h5>The noisy update process can allow the model to avoid local minima (e.g. premature convergence).</h5>
+                        </li>
+                    </ul> <br>
+                    <h5><b>Disadvantages</b></h5>
+                    <ul>
+                        <li>
+                            <h5>The frequent updates can result in a noisy gradient signal, which may cause the model parameters and in turn the model error to jump around. You can look at the above figure.</h5>
+                        </li>
+                        <li>
+                            <h5>The noisy learning process down the error gradient can also make it hard for the algorithm to settle on an error minimum for the model.</h5>
+                        </li>
+                    </ul>
+                </h5> <br><br>
+                
+                <h4 class="darklink"><b>Mini-Batch Gradient Descent</b></h4> <br>
+                <h5>
+                    <h5><b>Advantages</b></h5>
+                    <ul>
+                        <li>
+                            <h5>Mini-Batch Gradient Descent is computationally more efficient than Batch Gradient Descent even on all the large datasets.</h5>
+                        </li>
+                        <li>
+                            <h5>Mini-Batch is a general algorithm. This means we can change the value of 'n' to change the algorithm into Batch or Stochastic Gradient Descent. When Batch-Size is 1, Mini-Batch Converts into Stochastic Gradient Descent and similarly when Batch-Size is equal to 'm' i.e. is total number of training examples, Mini-Batch changes into Stochastic Gradient Descent.</h5>
+                        </li>
+                        <li>
+                            <h5>The model update frequency is higher than batch gradient descent which allows for a more robust convergence, avoiding local minima.</h5>
+                        </li>
+                    </ul>
+                    <h5><b>Disadvantages</b></h5>
+                    <ul>
+                        <li>
+                            <h5>Adds another hyperparameter 'n' i.e. batch size to fiddle around with.</h5>
+                        </li>
+                    </ul>
+                </h5> <br><br> <br>               
+        
+        <h5 ><b class="darklink">NOTE: </b> &nbsp; When implementing Stochastic and Mini-Batch gradient descent its extremetly important that the dataset is nicely shuffled. If there isn't continuous variance throughout the dataset, you can be pretty sure that your gradient descent is not going to work properly. Though Batch Gradient Descent will continue to give similar results irrespective of the fullfilment of this requirement.</h5> <br><br>
+        <h5> 
+            Mini-batch gradient descent is the <span class="darklink">recommended</span> variant of gradient descent for most applications, especially in deep learning.Small values give a learning process that converges quickly at the cost of noise in the training process.Large values give a learning process that converges slowly with accurate estimates of the error gradient. <br>
+            Another important result which has been found in many researches is that <span class="darklink">batch-size of 32</span> is generally very good for large sets.
+        </h5> <br><br> <hr> <br>
+        <!--  page ends-->
+        </div>
+        
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body></html>
