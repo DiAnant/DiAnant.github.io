@@ -67,7 +67,7 @@
                  So, we are going to create a Network class in which we’ll input the number of layers and number of neurons in each layer. Network class will have a constructor which will initialize random weights and biases to all the neurons of our network.<br><br>Why it’s important to randomly initialize the weights and biases? Weights and biases cannot be simply initialized to say like 0 because then in the output layer, the influence of all the neurons will be same and our neural net will be utter trash. For knowing why this happens you’ll have to follow along.<br><br>So in our considered case of a neural net with 1 hidden layer with 30 neurons, our object will be [784, 30, 10]. So for a neural net as such, what will be the weights and biases? <br><br></h5>
                  
                  <div align="center" >
-                 <img src="net1.jpg" alt="data" width="700px">
+                 <img src="net1.jpg" alt="data">
                  </div> <br><br>
                  
                  <h5 class="lineh">
@@ -76,7 +76,7 @@
                      Now, let’s define the <span class="darklink">Feedforward function.</span> What this function very intelligently does is do the forward pass with minimal effort. <br><br>
                      <script src="https://gist.github.com/DiAnant/c8b84de4f8425c03c5ea5440f052f147.js"></script> <br>
                      
-                    Now comes the real deal, the <span class="darklink">Gradient Descent</span> function. We are going to implement a mini-batch gradient descent. Mini batch gradient descent can be changed into work as Batch Gradient Descent if we choose the batch size as m (number of training examples) or Stochastic Gradient Descent if we choose the batch size as 1. <br><br>
+                    Now comes the real deal, the <span class="darklink">Gradient Descent</span> function. We are going to implement a mini-batch gradient descent. Mini batch gradient descent can be changed into work as Batch Gradient Descent if we choose the batch size equal to m (number of training examples) or Stochastic Gradient Descent if we choose the batch size equal to 1. <br><br>
                     <b>Note,</b> here we are actually going to implement Stochastic Gradient Descent but I chose to do it through mini-batch gradient descent because that’s a more general approach. We can alter the batch size as we wish. <br><br>
                  </h5>
                  
@@ -199,7 +199,7 @@
                          The <span class="darklink">backward pass</span> step in the above code makes effient use of python's negative indices. I'll suggest you to now manually try to use the backprop function to find delta_nabla values and doing all the matrices multiplication by hand.
                      </h5> <br><br> 
                       <h5 class="lineh">Now, I am going to provide full code of this implementation of neural network. You can <a href="Michael Nielsen - Mini Batch Gradient Descent - FeedForward Neural Network.ipynb" class="darklink">download</a> the jupyter notebook for this too.</h5> <br>
-            <h5 class="lineh"><b><u>NOTE</u> :</b> When trying out Mini Batch Gradient Descent with batch size other than 1 and m, you will need to shuffle your. You can either do that arrangement in the Code or in the CSV file itself. I shuffled the CSV file.</h5> <br><br>
+            <h5 class="lineh"><b><u>NOTE</u> :</b> When implementing Stochastic Gradient Descent and Mini-Batch Gradient Descent, its extremely important to shuffle your dataset. You can either do that arrangement in the Code or in the CSV file itself. I shuffled the CSV file.</h5> <br><br>
                       
                      <script src="https://gist.github.com/DiAnant/2dd92eb8ac6e43c3aa37ec972ef258a1.js"></script> <br><br>
                      
