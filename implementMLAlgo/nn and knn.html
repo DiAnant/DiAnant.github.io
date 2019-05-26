@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Nearest Neighbour</title>
+    <title>Nearest Neighbour Classifiers</title>
 
     <!--linking css-->
     <link rel="stylesheet" href="css/nn%20and%20knn.css" class="css">
@@ -68,11 +68,20 @@
             </div>
             <h5>
                 <p>
-                    So as you can see, it's pretty straightforward and so is its implementation. Let's jump right into it. <br><br>
-                </p>
+                    So as you can see, it's pretty straightforward and so is its implementation. I implemented this algorithm on two different datasets, <a href="http://yann.lecun.com/exdb/mnist/">MNIST</a> dataset and <a href="https://www.cs.toronto.edu/~kriz/cifar.html">CIFAR-10</a> dataset. And I couldn't run the algorithm over full test-sets because it was taking too much time training. I did it for the first 1000 examples on both datasets.<br><br>
+                </p>    
             </h5>
-            <script src="https://gist.github.com/DiAnant/436569dbe1b7a669e040f84fc360c058.js"></script> <br>
-            <h5>I trained this model on complete <a href="https://www.cs.toronto.edu/~kriz/cifar.html" target="_blank">CIFAR-10</a> dataset and it's accuracy was found to be around 20%.</h5> <br><br><br><br>
+            <h4><u>Applying Nearest Neighbour On MNIST Dataset</u></h4> <br>
+            <script src="https://gist.github.com/DiAnant/c7f71f3f52be84a7c0e4c1e1e6c537ca.js"></script> <br>
+            <h5>Applying Nearest Neighbour algorithm on first 1000 examples showed some promising results. Accuracy was found to be 45.9% which is pretty good.</h5> <br><br><hr><br><br>
+            
+            <h4><u>Applying Nearest Neighbour On CIFAR-10 Dataset</u></h4> <br>
+            <script src="https://gist.github.com/DiAnant/78c8081cda901fd4beda85a7ebd33570.js"></script> <br>
+            <h5>Applying Nearest Neighbour algorithm on first 1000 examples of CIFAR-10 gave pretty average results. Accuracy was found to be 25.3% which is pretty okayish, but it gives us a solid idea that our algorithm is working.</h5>
+            
+            
+            
+            <br><br><hr><br><br>
             <h3 align="center"><u>K - Nearest Neighbour Classifier</u></h3> <br><br>    
             <h5>
                 <p>
