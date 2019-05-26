@@ -1,0 +1,109 @@
+<html lang="en">
+  
+   
+   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Nearest Neighbour</title>
+
+    <!--linking css-->
+    <link rel="stylesheet" href="css/nn%20and%20knn.css" class="css">
+    <!--linking font-->
+    <link href="https://fonts.googleapis.com/css?family=Arvo:400,700" rel="stylesheet">
+    <!--linking fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+
+
+<body>
+
+    <!--    making a navbar-->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark mynav">
+        <a class="navbar-brand font-weight-bold" href="https://dianant.github.io/">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse mr-100" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto mr-10">
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#projects">Projects<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#blog">Blog</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#aboutMe">About Me</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    
+    <!-- Navbar Ends-->
+
+        
+<!--           heading-->
+            <h1 align="center" id="heading">Nearest Neighbour and K Nearest Neighbour for Image Classification</h1>   
+            <hr>
+            <br><br><br><br><br><br><br>
+        <div class="container">    
+            <h5>Andrej Karpathy in <a href="http://cs231n.stanford.edu" target="_blank">Stanford's cs231n</a> class has explained this deeply. You can check out the course <a href="http://cs231n.github.io/classification" target="_blank">notes.</a> You can also find his excellent lectures <a href="https://www.youtube.com/playlist?list=PLkt2uSq6rBVctENoVBg1TpCC7OQi31AlC" target="_blank">here.</a> <br><br></h5> <br><br>
+            <h3 align="center"><u>Nearest Neighbour Classifier</u></h3> <br>
+            <h5>
+                <p>
+                    Nearest Neighbour Classifier is one of the simplest kinds of Image Classifier and cosnidering its simplicity, it's pretty good. Anything is better than random guess anyway.
+                </p>
+                <p>
+                    Nearest Neighbour classifier finds the L1 distance bwetween all the corresponding pixels of two images and adds them up. That sum of L1 distance between two images suggests how 'similar' two images are. Look at the the image below.
+                </p>
+            </h5>
+            <div align="center">
+                <img src="images/image.PNG" alt="nn">
+                <br><br><br>
+                <img src="images/images1.PNG" alt="L1">
+                <br><br><br>
+            </div>
+            <h5>
+                <p>
+                    So as you can see, it's pretty straightforward and so is its implementation. Let's jump right into it. <br><br>
+                </p>
+            </h5>
+            <script src="https://gist.github.com/DiAnant/436569dbe1b7a669e040f84fc360c058.js"></script> <br>
+            <h5>I trained this model on complete <a href="https://www.cs.toronto.edu/~kriz/cifar.html" target="_blank">CIFAR-10</a> dataset and it's accuracy was found to be </h5> <br><br><br><br>
+            <h3 align="center"><u>K - Nearest Neighbour Classifier</u></h3> <br><br>    
+            <h5>
+                <p>
+                    Isn't it a bit strange that we only look for the label of most similar image in the training set when we wish to make a prediction? Something called a <b>k Nearest Neighbour</b> classifier almost always gives better results.
+                </p>
+                <p>
+                    kNN makes a simple tweak to our previous strategy. Instead of finding the closest image in the training set, how about finding k most similar images and then let them vote for the most probable label. This exactly what a kNN does. Doing this makes kNN more resistant outliers (rebel examples). <br>
+                </p>
+            </h5> <br>
+            <div align="center">
+                <img src="images/image2.PNG" alt="kNN">
+            </div> <br>
+            <div class="container x">
+                An example of the difference between Nearest Neighbor and a 5-Nearest Neighbor classifier, using 2-dimensional points and 3 classes (red, blue, green). The colored regions show the decision boundaries. The white regions show points that are ambiguously classified (i.e. class votes are tied for at least two classes). Notice that in the case of a NN classifier, outlier datapoints (e.g. green point in the middle of a cloud of blue points) create small islands of likely incorrect predictions, while the 5-NN classifier smooths over these irregularities, likely leading to better generalization on the test data (not shown). Also note that the gray regions in the 5-NN image are caused by ties in the votes among the nearest neighbors (e.g. 2 neighbors are red, next two neighbors are blue, last neighbor is green).
+            </div> <br><br>
+            <h5>
+                But what value of <b>k</b> should we  use ? Well there's no definite answer. We can try out a few values and choose the one which works best for us. So what we'll do is take out a small part of our training set and use it to check which value of <b>k</b> works best for us. <br>
+                In our case, we have 50,000 examples in training set. Let's take out 1000 examples out and we'll call it a <b>validation set.</b> We'll train our kNN on remaining 49,000 examples and decide for the value of k by using the validation set. So the typical values of k which are found to good are 3,5,7,10 e.t.c. So here is a piece of code which tries out to find the most efficient value of k. <br><br>
+            </h5>
+            <script src="https://gist.github.com/DiAnant/8ddbae43b75b24aae227cba0aaa1c39a.js"></script> <br><br>
+            <h3><u>kNN Is Not Particularly Good</u></h3>
+            <h5>The Nearest Neighbor Classifier may sometimes be a good choice in some settings (especially if the data is low-dimensional), but it is rarely appropriate for use in practical image classification settings. </h5> <br><br>
+            <div align="center">
+                <img src="images/image3.PNG" alt="kNN">
+            </div> <br><br>
+            <h5>Pixel-based distances on high-dimensional data (and images especially) can be very unintuitive. An original image (left) and three other images next to it that are all equally far away from it based on L2 pixel distance. Clearly, the pixel-wise distance does not correspond at all to perceptual or semantic similarity.</h5>
+        <br><br><hr><br>
+        </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body></html>

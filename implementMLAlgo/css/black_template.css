@@ -1,0 +1,39 @@
+html{
+    scroll-behavior: smooth;
+    font-family: 'arvo',serif;
+}
+
+body{
+    font-family: 'arvo',serif;
+    background-color: black;
+    color: white;
+}
+
+.mynav {
+    font-family: 'arvo',serif;
+    opacity: .99;
+}
+
+hr{
+    border: 1px solid dimgray; 
+    width: 85%;
+    color: white;
+}
+
+#heading{
+    padding-top:8%;
+    font-size: 45px;
+}
+
+
+@media screen and (max-width: 720px) {
+    #heading{
+    padding-top: 20%;
+    font-size: 30px;
+    }
+}
+
+
+.darklink{
+    color: #fddf01;
+}
