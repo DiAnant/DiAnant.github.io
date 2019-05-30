@@ -7,10 +7,10 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Support Vector Machines</title>
+    <title>Cross Validation</title>
 
     <!--linking css-->
-    <link rel="stylesheet" href="css/svm.css" class="css">
+    <link rel="stylesheet" href="css/crossval.css"class="css">
     <!--linking font-->
     <link href="https://fonts.googleapis.com/css?family=Arvo:400,700" rel="stylesheet">
     <!--linking fontawesome-->
@@ -46,18 +46,31 @@
 
         
 <!--           heading-->
-            <h1 align="center" id="heading">Implementing a Support Vector Machine (SVM) In Python</h1>   
+            <h1 align="center" id="heading" class="darklink">The Cross-Validation Set</h1>   
             <hr>
             <br><br><br><br><br><br><br>
         <div class="container">    
+         <h5>Typically, there are two kinds of sets in a dataset. <br>
+         <ul>
+             <li>
+                 <b class="darklink">Training Set : </b>The bigger chunk of our dataset on which we train our machine learning algorithm.
+             </li>
+             <li>
+                 <b class="darklink">Test Set : </b>The other piece of our dataset on which we test the performance of our machine learning algorithm.
+             </li>
+         </ul></h5> <br>
+        <h5> Well imagine a scenario. You trained your algorithm on the training set and used the test set to check the performance of your algorithm. As it turns out, your algorithm's performance on the test set was very poor. Now you thought if I train my model for a bit longer, it might solve my problem. You  increased the number of epochs for training and it slightly improved peroformance over test set, but this isn't satisfactory yet. Now it occured to you, how about using another machine learning algorithm, or using another activation function or using or adding regularization or tweaking some other hyperparameter. <br></h5>
+        <h5> In the above process, what happened was that you un-intentionally trained your algorithm over the test set and your test set is no more a <b class="darklink">real</b> test set. It doesn't anymore projects the real scenario to you.
+        </h5> <br>
+         
          <h5>
-             Support Vector Machines are frankly one of the most toughest concepts I have ever attempted to understand and implement. So understanding SVM's can be an overwhelming experience and I suggest that you do not get discouraged while learning them. <br><br> So while learning about SVM's on the internet, I watched many lectures. One important lecture was of <a href="https://www.csail.mit.edu/person/patrick-winston" target="_blank">Patrick Winston</a> of MIT where he developed the idea of SVM from scratch. It involves lot of mathematics and certainly helps ones intution. You can watch that <a href="https://www.youtube.com/watch?v=_PwhiWxHK8o" target="_blank">video</a> here but it's certainly not a prerequisite.
-         </h5> <br><br><br> <h4>If you wish you can <a href="data_1/SVM%20Notes.pdf" target="_blank" download>download the PDF</a> of my handwritten notes about the mathematical derivations of SVM's which I learned about from Patrick's lecture.</h4> <br><br><br><br>
+             <p>
+                 So what people do to avoid this condition is they make another set, specifically to check our hypermeters and tweak them, and this set is called the<b class="darklink"> Cross-Validation Set.</b>
+             </p>
+         </h5>
          
-         <h5></h5>
          
-         
-         <br><br><hr><br><br>
+         <br><br><hr><br>
         </div>
         
     <!-- Optional JavaScript -->

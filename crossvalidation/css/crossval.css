@@ -5,6 +5,12 @@ html{
 
 body{
     font-family: 'arvo',serif;
+    background-color: black;
+    color: white;
+}
+
+h5{
+    line-height: 1.7;
 }
 
 .mynav {
@@ -12,13 +18,10 @@ body{
     opacity: .99;
 }
 
-h5{
-    line-height: 1.7;
-}
-
 hr{
     border: 1px solid dimgray; 
     width: 85%;
+    color: white;
 }
 
 #heading{
@@ -34,10 +37,7 @@ hr{
     }
 }
 
-.darklink{
-    color: #3366BB;
-}
 
-.x{
-    width: 70%;
+.darklink{
+    color: #fddf01;
 }
