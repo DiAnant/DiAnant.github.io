@@ -5,6 +5,8 @@ html{
 
 body{
     font-family: 'arvo',serif;
+    background-color: black;
+    color: white;
 }
 
 .mynav {
@@ -15,6 +17,7 @@ body{
 hr{
     border: 1px solid dimgray; 
     width: 85%;
+    color: white;
 }
 
 #heading{
@@ -22,21 +25,18 @@ hr{
     font-size: 45px;
 }
 
-.lesson{
-    padding-bottom: 10%;
-}
-
-.para{
-    font-size: 21px;
-}
 
 @media screen and (max-width: 720px) {
     #heading{
     padding-top: 20%;
     font-size: 30px;
     }
-    
-    .lesson{
-        padding-bottom: 25%;
-    }
+}
+
+h5{
+    line-height: 1.7;
+}
+
+.darklink{
+    color: #fddf01;
 }

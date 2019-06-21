@@ -1,0 +1,200 @@
+<html lang="en">
+  
+   
+   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Cross Entropy Cost Function</title>
+
+    <!--linking css-->
+    <link rel="stylesheet" href="css/style.css"class="css">
+    <!--linking font-->
+    <link href="https://fonts.googleapis.com/css?family=Arvo:400,700" rel="stylesheet">
+    <!--linking fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+
+
+<body>
+
+    <!--    making a navbar-->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark mynav">
+        <a class="navbar-brand font-weight-bold" href="https://dianant.github.io/">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse mr-100" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto mr-10">
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#projects">Projects<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#blog">Blog</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#aboutMe">About Me</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    
+    <!-- Navbar Ends-->
+
+        
+<!--           heading-->
+            <h1 align="center" id="heading"><span class="darklink">The Cross-Entropy Cost Function</span></h1>   
+            <hr>
+            <br><br><br><br><br><br><br>
+        <div class="container">    
+            <h5>
+                Most of the things about Neural Networks which I've learned about Neural Nets is because of Michael Nielsen's amazing <a href="#"><span class="darklink">Neural Networks And Deep Learning Book </span></a> which I highly recommend everyone interested in Deep Learning to read. The code is mostly borrowed from <a href="#"><span class="darklink">Chapter 3</span></a> of that book.
+            </h5> <br><br><br>
+            <h5>
+                How de wo learn things? I mean that is an awe-strikingly broad question very intelligent humans have been asking themselves from a very long time. But the question is there a pattern to how fast we'll adapt to something in our nature i.e. learn something? <br><br>
+                Well look at it this way. Imagine you are teaching about numbers to a nursery boy. After <span class="darklink">lesson one</span> you find that <span class="darklink">8 out of 10 times he got confused b/w a 'one' and a 'seven'</span> and that <span class="darklink">4 out of 10 times he was confused b/w a 'six' and a 'nine'.</span> <br>
+                After this lesson, you'll probably recognize the boy's mistakes and try to emaphasize the differences in numbers in which the kid is confused. After <span class="darklink">Lesson 2</span> you do another evaluation and find that, <span class="darklink">2 out of 10 times he got confused b/w a 'one' and a 'seven'</span> and that <span class="darklink">3 out of 10 times he was confused b/w a 'six' and a 'nine'.</span> <br><br>
+                Well this behaviour is generally common in all humans not just kids. <span class="darklink">If we are badly wrong about something, we learn much faster than we are less badly wrong about something.</span> We also might see that after a month or so, kid is totally able to differentiate between a 'seven' and a 'one', but still occasionally find it hard to differentiate between a 'six' and a 'nine'. <br>
+                So now the question is, does the cost function we have been using till now provide us with this feature. Let's See.
+            </h5> <br><br><br>
+            
+            <h5>
+                Actually the Mean Square Cost Function we have been using till now doesn't provide us with this feature. To show this Michael did a simple experiment which depicts this shortcomming of MSE cost function very clearly. <br><br>
+                So what he desired to do was, to train a single neuron to output 0 when input was one. That's pretty simple. He chose random intial weight 0.6 and random initial bias 0.9. So the initial output of the neuron is 0.82 which is pretty far off. After some training, <br><br>
+            </h5>
+            <div align="center">
+                <img src="mse1.png" alt="MSE">
+            </div> <br>
+            <h5>
+                So yeah, that's pretty reasonable, that's what we were expecting. It now outputs 0.09 which is still far from 0 but yes, its reasonable. So now, we are going to try something just a little bit different. <br> Now if we chose starting bias and weight both to be 2.0, the initial output is 0.98 which is even worse than the previous case.
+                Let's how the training went, <br><br>
+            </h5>
+            <div align="center">
+                <img src="mse2.png" alt="MSE">
+            </div> <br>
+            <h5>
+                Hold on, this is pretty unexpected! In fact, it's just contrary to the human behaviour. We learn more faster when we are more badly wrong but this shows contrary results. When initial output was 0.82 learning was much easier than when initial output was 0.98. <br>
+                Now we need to figure out what's wrong with the MSE cost function and fix it. 
+            </h5> <br><br>
+            <h5>
+                To understand the origin of the problem, consider that our neuron learns by changing the weigths and a bias at a rate determined by the partial derivatives of the cost function, <span><img src="dc.dw.PNG" alt="dw"> and </span><span><img src="dc.dc.PNG" alt="db"></span> So saying 'learning is slow'  is really same as saying that those partial derivatives are small.
+            </h5> <br><br>
+            <h5>Now we'll have to figure out why those partial derivatives are small. To understand that, let's compute the  partial derivatives. So our cost function is, 
+            </h5> <br>
+            <div align="center">
+                <img src="mse_cost.PNG" alt="mse_cost">
+            </div> <br>
+            <h5>This is the MSE Cost function in its standard notation, let's just simplify it a bit.</h5> <br>
+            <div align="center">
+                <img src="mse_cost1.PNG" alt="mse_cost_simplified">
+            </div> <br>
+            <h5>
+                Yeah, here it is. Now below is a simple snap of derivation of snap <span><img src="dc.dw.PNG" alt=""></span> and <span><img src="dc.dc.PNG" alt=""></span>.
+            </h5> <br>
+            <div align="center">
+                <img src="derivation.jpeg" alt="">
+            </div> <br>
+            <h5>
+                Putting <i>x = 1</i> and <i>y = 0 </i> in the above calculated gradients would give us these equations.
+            </h5> <br>
+            <div align="center">
+                <img src="equations.PNG" alt="equations">
+            </div> <br>
+            <h5>
+                To understand the behaviour of these equations let's look more closely at the <span><img src="sigmoid.PNG" alt="sigmoid"></span> term in both the equations. So here's the sigmoid activation function. <br>
+            </h5> <br>
+            <div align="center">
+                <img src="activation.PNG" alt="sigmoid_graph">
+            </div> <br><br>
+            <h5>
+                From the above graph we can clearly see that when the neuron's output get close to 1, <span><img src="sigmoid.PNG" alt="sigmoid"></span> becomes very small. And hence it, makes <span><img src="dc.dc.PNG" alt="sigmoid"></span> and <span><img src="dc.dw.PNG" alt="sigmoid"></span> very small. And this is the very origin of the <span class="darklink">learning slowdown.</span>
+            </h5>
+            <br><br>
+            <h3 align="center"><span class="darklink"><u>Introducing The Cross Entropy Cost Function</u></span></h3> <br><br>
+            <h5>
+                I think it's pretty clear now where the problem lies, it's in the cost function. The derivative of the cost function w.r.t. weights and biases should not contain the <span><img src="sigmoid.PNG" alt=""></span> term, otherwise learning slowdown will continue to occur. And hence, very smart people in AI developed a new cost function which solves this problem, <span class="darklink">The Cross Entropy Cost Function.</span> Let's look at it in more detail.
+            </h5> <br><br>
+            <h5>
+                To understand the cross-entropy, let's move a little away from our super-simple toy model. We'll suppose instead that we're trying to train a neuron with several input variables, <i>x1,x2,…,</i> corresponding weights <i>w1,w2,…,</i> and a bias, b:
+            </h5> <br>
+            <div align="center">
+                <img src="model.PNG" alt="model">
+            </div> <br>
+            <h5>
+                The output from the neuron is ofcourse, <span><img src="sig.PNG" alt=""></span> where <span><img src="z.PNG" alt=""></span> is the weighted sum of the inputs. We define the cross-entropy cost function for this neuron by
+            </h5> <br>
+            <div align="center">
+                <img src="cross.PNG" alt="">
+            </div> <br>
+            <h5>
+                where n is the total number of items in the training data, the sum is over all training inputs x, and y is the corresponding desired outputs.
+                <br><br>
+                Now while looking at this expression, we will see that it satisfies two most obvious properties of a cost function i.e. <span class="darklink">it must always ouptut positive value</span> and <span class="darklink">when calculated value is close to the ouput, cost should be close to zero.</span> Summing up, the cross-entropy is positive, and tends toward zero as the neuron gets better at computing the desired output, <i>y</i>, for all training inputs, <i>x</i>. That's two properties we would expect a cost function to have. And hence, these properties are satisfied <span class="darklink">mean square error</span> too but <span class="darklink">cross entropy</span> solves the problem of learning slowdown too. To see how cross entropy solves this problem, let's compute the partial derivatives of the cross-entropy cost with respect to the weights. We substitute <span><img src="sig.PNG" alt=""></span> into the cross-entropy equation and then apply the chain rule.
+            </h5> <br><br>
+            <div align="center">
+                <img src="cross-derivative.PNG" alt="">
+            </div> <br>
+            <h5>
+                Putting everything over a common denominator and simplifying this becomes:
+            </h5> <br>
+            <div align="center">
+                <img src="der.PNG" alt="">
+            </div><br>
+            <h5>
+                Now using the definition of sigmoid, <span><img src="sigisigi.PNG" alt=""></span> and a little algebra we can show that, <span><img src="sig_def.PNG" alt=""></span>
+            </h5> <br>
+            <div align="center">
+                <img src="sigmoid_der_.jpg" alt="">
+            </div> <br>
+            <h5>
+                Using above results, we will see that <span><img src="sigmoid.PNG" alt=""></span> cancels the denominator and our equation simplifies to this beautiful expression,
+            </h5> <br>
+            <div align="center">
+                <img src="we.PNG" alt="">
+            </div> <br>
+            <h5>
+                Well, what's so beautiful about this expression? The beauty lies in the fact that the rate at which weights learn depends upon <span><img src="ooooo.PNG" alt=""></span>, i.e. by the error in the output. The larger the error, the faster the neurons learn. This is just what we'd wanted the whole time. In particular it avoids the learning slowdown caused by the <span><img src="sigmoid.PNG" alt=""></span> term unlike the MSE cost function. Actually, the cross-entropy cost function was intentionally chosen so to remove the <span><img src="sigmoid.PNG" alt=""></span> term. <br><br>
+                Very similarly, we can calculate the partial derivative of the cost function with respect to the bias and we'll see again that it stills avoids the learning slowdown issue as it no more contains the <span><img src="sigmoid.PNG" alt=""></span> term. <br><br>
+            </h5>
+            <div align="center">
+                <img src="bi.PNG" alt="">
+            </div> <br><br>
+            <h5>
+                After implementing the cross entropy cost function, Michael again ran it on the toy example which gave learning slowdown earlier. Initial weights and biases were chosen to be 2.0 as before and initial output was 0.98.
+            </h5> <br>
+            <div align="center">
+                <img src="yeah.PNG" alt="">
+            </div> <br>
+            <h5>
+                Clearly, cross entropy has solved the learning slowdown issue. That is what we wanted, neurons to learn faster when they are badly wrong.
+                <br><br>
+                <b class="darklink">Note, </b> the activations from the final layer of the network don't usually form a probablity distribution. So it's not really correct to think of the final activations as a probablity distribution. We should use softmax activation in the last layer if we want to achieve a probablity distribution as an ouptut but here we'll keep using a sigmoid activation function for all the layers in the network. <br><br>
+                When should we use the cross-entropy instead of the quadratic cost? In fact, the cross-entropy is nearly always the better choice, provided the output neurons are sigmoid neurons. To see why, consider that when we're setting up the network we usually initialize the weights and biases using some sort of randomization. It may happen that those initial choices result in the network being decisively wrong for some training input - that is, an output neuron will have saturated near 1, when it should be 0, or vice versa. If we're using the quadratic cost that will slow down learning. It won't stop learning completely, since the weights will continue learning from other training inputs, but it's obviously undesirable. <br><br><br>
+                In the <a href="../feedforward/feedforward.html"><span class="darklink">last chapter</span></a>, when we derived the equations of the backpropagation, we derived them specifically for the case when we were using <span class="darklink">mean square error</span> as the cost function. Now when we want to use the cross entropy cost function we will have to make a few changes. In particular, this one equation
+            </h5> <br>
+            <div align="center">
+                <img src="equation1_1.PNG" alt="">
+            </div> <br>
+            <h5>We will have to derive this again for the cross entropy cost function.</h5> <br>
+            <div align="center">
+                <img src="photo_2019-06-21_10-24-56%20-%20Copy.jpg" alt="">
+            </div> <br><br>
+            <h5>
+                Hence, we can see now <span><img src="delta.PNG" alt=""></span> <br><br>
+                What if we decide to have <span class="darklink">linear neurons</span> in the last layer of the network. In that case, <span><img src="al.PNG" alt=""></span> It would be better if we use a mean square error cost function in that case rather than the cross entropy cost function as MSE will remove the learning slowdown issue in this case. You can easily prove it by using chain rule. <br><br>
+                To understand mathematically, how the cross entropy cost function cam e into existence you can <a href="proof.pdf" target="_blank" download><span class="darklink">download</span></a> this PDF file which contains the proof. <br><br>
+                In further posts in this series we will understand concepts like regularization and weight initializations so to further improve the performance of our neural network. And then we will implement all those concepts into a working model.
+            </h5>
+            
+            <br><br><br><hr><br><br>
+        </div>
+        
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body></html>

@@ -53,10 +53,11 @@
          
              <h5 class="lineh">The most common application of neural networks taught to beginners in the field is of handwritten digits recognition by using MNIST dataset. You could simply use a popular deep learning framework like Tensorflow or PyTorch and code up a recognizer in like 2-3 minutes but do you understand what happens inside the model. How just supplying some matrices/tensors to a model it acquires this ability to recognize handwritten digits? Let’s find out.</h5> <br><br><br>
              
-             <h5 class="lineh"><b>Note:</b>  I myself have learnt about this subject from Michael Nielson’s excellent <a class="darklink" href="http://neuralnetworksanddeeplearning.com" target="_blank">book</a> and Andrew Ng’s deep learning <a class="darklink" href="https://www.coursera.org/specializations/deep-learning" target="_blank">specialization</a>. I feel that Michael’s implementation of Feedforward net is excellent because it generalizes perfectly well compared to some other implementations of neural nets you’ll find on the internet. And I have used his approach in this code too.</h5>
+             <h5 class="lineh"><b>Note:</b>  I myself have learnt about this subject from Michael Nielson’s excellent <a class="darklink" href="http://neuralnetworksanddeeplearning.com" target="_blank">book</a> and Andrew Ng’s deep learning <a class="darklink" href="https://www.coursera.org/specializations/deep-learning" target="_blank">specialization</a> which I higly recommend to take a look at yourself. I feel that Michael’s implementation of Feedforward net is excellent because it generalizes perfectly well compared to some other implementations of neural nets you’ll find on the internet. And I have used his approach in this code too.</h5>
              <br><br><br>
              
-             <h5 class="lineh">We are going to use MNIST dataset available on <a href="https://www.kaggle.com/c/digit-recognizer/data" class="darklink">Kaggle.</a> Let’s take a look at the dataset.</h5> <br>
+             <h5 class="lineh">We are going to use MNIST dataset available on <a href="https://www.kaggle.com/c/digit-recognizer/data" class="darklink">Kaggle.</a> Let’s take a look at the dataset.</h5>
+             <h5 class="lineh"><b>Note, </b>we are going to convert our training and test_data into a list of tuples of tuples of (x,y) for each example. We are going to implement this later after we have created our Network Class.</h5> <br><br>
              
              <div align="center" >
                  <img src="data.PNG" alt="data">
@@ -76,8 +77,11 @@
                      Now, let’s define the <span class="darklink">Feedforward function.</span> What this function very intelligently does is do the forward pass with minimal effort. <br><br>
                      <script src="https://gist.github.com/DiAnant/c8b84de4f8425c03c5ea5440f052f147.js"></script> <br>
                      
-                    Now comes the real deal, the <span class="darklink">Gradient Descent</span> function. We are going to implement a mini-batch gradient descent. Mini batch gradient descent can be changed into work as Batch Gradient Descent if we choose the batch size equal to m (number of training examples) or Stochastic Gradient Descent if we choose the batch size equal to 1. <br><br>
-                    <b>Note,</b> here we are actually going to implement Stochastic Gradient Descent but I chose to do it through mini-batch gradient descent because that’s a more general approach. We can alter the batch size as we wish. <br><br>
+                    Now comes the real deal, the <span class="darklink">Gradient Descent</span> function. We are going to implement a mini-batch gradient descent. If you do not know what a mini-batch gradient descent, I suggest you just take a look at <a href="../allkindsofgrad/index.html" target="_blank"><span class="darklink">this</span></a> very short post of mine. <br><br>
+                    So for implementing Gradient Descent, we are going to create two functions, a <span class="darklink">SGD Function</span> which will be used to regulate everything and a <span class="darklink">Update_Mini_Batch Function</span> which will update the weights and biases for each batch of examples.
+                    <br>
+                    <b>Note, </b>we'll call a <span class="darklink">backprop()</span> function which will <span class="darklink">calculate gradients for each example one by one.</span> The code below is nicely commented and should help you to go through this.
+                    <br><br>
                  </h5>
                  
                  <script src="https://gist.github.com/DiAnant/94a6608a194f23b19e9a562760b0d663.js"></script> <br>
@@ -153,7 +157,7 @@
                      </div> <br>
                      <h5 class="lineh">Now we have a equation which relates <span><img src="delta.PNG" alt="delta(l)"></span> to <span><img src="delta_1.PNG" alt="delta(l+1)"></span>. And now we want to get rid of the partial derivatives term in the equation.</h5>
                      <br>
-                     <div ailgn="center">
+                     <div align="center">
                          <img src="equation2_der1.PNG" alt="derivation_1">
                      </div> <br> <h5 class="lineh">Differentiating, we obtain <br></h5> <br>
                      <div align="center">
@@ -198,16 +202,18 @@
                      <h5 class="lineh">
                          The <span class="darklink">backward pass</span> step in the above code makes effient use of python's negative indices. I'll suggest you to now manually try to use the backprop function to find delta_nabla values and doing all the matrices multiplication by hand.
                      </h5> <br><br> 
-                      <h5 class="lineh">Now, I am going to provide full code of this implementation of neural network. You can <a href="Michael Nielsen - Mini Batch Gradient Descent - FeedForward Neural Network.ipynb" class="darklink">download</a> the jupyter notebook for this too.</h5> <br>
-            <h5 class="lineh"><b><u>NOTE</u> :</b> When implementing Stochastic Gradient Descent and Mini-Batch Gradient Descent, its extremely important to shuffle your dataset. You can either do that arrangement in the Code or in the CSV file itself. I shuffled the CSV file.</h5> <br><br>
+                      <h5 class="lineh">Now, I am going to provide full code of this implementation of neural network. You can <a href="Neural Net -- MNIST Classification-- KAGGLE.ipynb" class="darklink">download</a> the jupyter notebook for this too. And remember you will have to download the datset from <a href="https://www.kaggle.com/c/digit-recognizer/data"><span class="darklink">Kaggle's MNIST classification</span></a> challenge.</h5> <br><br>
+                      
                       
                      <script src="https://gist.github.com/DiAnant/2dd92eb8ac6e43c3aa37ec972ef258a1.js"></script> <br><br>
                      
-                     <h5 class="lineh">After the 12th Epoch, the accuracy on the training set was around 95% and when I tested the CSV file generated by my model on the Test Set on Kaggle, it turned out to be a little more than 93% which is pretty good considering the simplicity of our neural net and such a basic cost-function.</h5>
+                     <h5 class="lineh">After training for 20 epochs, when I checked the generated CSV FIle of predictions on the test set, the accuracy turned out to be just a little more than 95%. <br> <br>
+                     <b>Note, </b> well but that is after we choosed the <span class="darklink">hyperparameters</span> after lot of fiddling around. We chose a mini_batch_size of 10 and learning_rate of 3.0 and training our network for 20 epochs. We will later learn how to choose hyperparameters effectively in these series of blog posts.
+                     </h5>
                      <br><br>
                      <h5 class="lineh">Now after looking at the code for forward pass you can probably realize why can't we initialize all the weights to 0 beacuse than all the activations for next layer will become same. <br>
                      In the future blogs I'll write about how to improve this model's performance. <br><br>
-                     You can also <a href="notes.pdf" class="darklink" target="_blank">download</a> my handwritten notes for this blog, but you might not be able to decipher my enigmated handwriting, can't help you there. 
+                     You can also <a href="notes.pdf" target="_blank"><span class="darklink">download</span></a> my handwritten notes for this blog, but you might not be able to decipher my enigmated handwriting, can't help you there. 
                      </h5> <br><br><hr><br><br>
         </div>
         
