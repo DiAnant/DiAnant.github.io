@@ -1,0 +1,295 @@
+<html lang="en">
+  
+   
+   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>SVM Image Classifier</title>
+
+    <!--linking css-->
+    <link rel="stylesheet" href="css/style.css"class="css">
+    <!--linking font-->
+    <link href="https://fonts.googleapis.com/css?family=Arvo:400,700" rel="stylesheet">
+    <!--linking fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+
+
+<body>
+
+    <!--    making a navbar-->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark mynav">
+        <a class="navbar-brand font-weight-bold" href="https://dianant.github.io/">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse mr-100" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto mr-10">
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#projects">Projects<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#blog">Blog</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#aboutMe">About Me</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    
+    <!-- Navbar Ends-->
+
+        
+<!--           heading-->
+            <h1 align="center" id="heading" class="darklink">Image Classifier Using SVM Loss And SGD</h1>   
+            <hr>
+            <br><br><br><br><br><br><br>
+        <div class="container">    
+            <h5>
+                In this post we are going to develop a powerful apporoach to Image Classification as compared to something like a kNN (k Nearest Neighbour) Classifier. This approch will have three major components, a <span class="darklink">score function</span> that maps raw data into class scores, a <span class="darklink">loss function</span> that quantifies the agreement between the predicted scores and the ground truth labels and lastly, an <span class="darklink">optimization technique</span> like SGD to minimize the loss function with respect to the parameters of the score function. <br>
+                <span class="darklink"><b>NOTE: </b></span> We are going to use CIFAR-10 dataset as the primary dataset while understanding the concepts but the code will be implemented on both MNIST and CIFAR-10 datasets. Most of the content is inspired from <a href="http://cs231n.github.io/linear-classify/" target="_blank"><span class="darklink">Linear Classifier Notes</span></a> and <a href="http://cs231n.github.io/optimization-1/" target="_blank"><span class="darklink">Optimization Notes</span></a> of <a href="cs231n.github.io" target="_blank"><span class="darklink">Stanford's CS231n Class.</span></a> 
+                
+            </h5> <br><br><br>
+            <h3 class="darklink" align="center"><u>Linear Classifier</u></h3> <br><br>
+            <h5>
+                Linear Classification is probably the simplest possible mapping function, a <span class="darklink">linear mapping</span>. A function <span class="darklink">f</span> maps a particular example image to a score matrix, which contains the scores of that particular example image for each of the classes. The class with the highest scores is chosen for prediction. 
+            </h5> <br>
+            <div align="center">
+                <img src="1.PNG" alt="function">
+            </div> <br><br>
+            <h5>
+                This is the linear mapping function where W and b are the parameters of the function and 'x sub i' is the flattened vector of the ith image i.e. a RGB image of shape (32, 32, 3) will be flattened to (3072,). The parameters in W are often called the weights, and b is called the bias vector because it influences the output scores, but without interacting with the actual data x(sub i). However, you will often hear people use the terms weights and parameters interchangeably. <br><br>
+                So a few things here are to be taken note of. Multiplying W with x(sub i), means evaluating a single image on 10 (number of classes) seperate classifiers in parallel. <b>Note, </b> we only have control over the parameters W and b and (x, y) i.e. the input and output are all unchanged. <span class="darklink">We try to modify the parameters W and b so that the above function f could take us as close as possible to y.</span> <br><br></h5> 
+                <h4 class="darklink">Advantage of Linear Classifier Over kNN Image Classifier</h4>
+                <br><h5>
+                In this approach, we use the training data (x, y) to only change the parameters W, b to give desirable results. Once learning is complete, we don't actually need anymore training data. We can completely discard the training set and keep the learned parameters. That is because a new test image can be simply forwarded through the function and classified based on the computed scores. Lastly, note that classifying the test image involves a single matrix multiplication and addition, which is significantly faster than comparing a test image to all training images. </h5> <br><br>
+                <h4 class="darklink">Interpreting A Linear Classifier</h4> <br>
+                <h5>
+                    Notice that a linear classifier computes the score of a class as a weighted sum of all of its pixel values across all 3 of its color channels. Depending on precisely what values we set for these weights, the function has the capacity to like or dislike (depending on the sign of each weight) certain colors at certain positions in the image. For instance, you can imagine that the “ship” class might be more likely if there is a lot of blue on the sides of an image (which could likely correspond to water). You might expect that the “ship” classifier would then have a lot of positive weights across its blue channel weights (presence of blue increases score of ship), and negative weights in the red/green channels (presence of red/green decreases the score of ship).
+                </h5> <br><br>
+                <div align="center">
+                    <img src="2%20.PNG" alt="">
+                </div> <br><br>
+                <h4 class="darklink">Interpretation of linear classifiers as template matching</h4> <br>
+                <h5>
+                    Another interpretation for the weights W is that each row of W corresponds to a template (or sometimes also called a prototype) for one of the classes. The score of each class for an image is then obtained by comparing each template with the image using an inner product (or dot product) one by one to find the one that “fits” best. With this terminology, the linear classifier is doing template matching, where the templates are learned. Another way to think of it is that we are still effectively doing Nearest Neighbor, but instead of having thousands of training images we are only using a single image per class (although we will learn it, and it does not necessarily have to be one of the images in the training set), and we use the (negative) inner product as the distance instead of the L1 or L2 distance.
+                </h5>
+                <div align="center">
+                    <img src="3.PNG" alt="">
+                </div> <br><br>
+                <h4 class="darklink">The Bias Trick</h4><br>
+                <h5>
+                    Here, we are using two parameters, W and b. As we proceed through the stuff, it gets really cumbersome to keep track of two sets of parameters (the biases b and the weights W) seperately. A commonly used trick is to combine these two sets of parameters into one single matrix that holds both of them by expanding the vector x(sub i) with one additional item that always holds the constant 1 - a default bias dimension. With the extra dimension the new score function will get simplified as: <br>
+                </h5>
+                <div align="center">
+                    <img src="4.PNG" alt="">
+                </div> <br>
+                <h5>
+                    With our CIFAR-10 example, x(sub i) will now be (3073, 1) instead of (3072, 1). The extra column that W has now corresponds to the bias b. The picture below might help to clarify the situation.
+                </h5><br>
+                <div align="center">
+                    <img src="5.png" alt="">
+                </div><br><br>
+                <h4 class="darklink">
+                    Image Data Processing
+                </h4> <br>
+                <h5>
+                     As a quick note, in the examples above we used the raw pixel values (which range from [0…255]). In Machine Learning, it is a very common practice to always perform normalization of your input features (in the case of images, every pixel is thought of as a feature). In particular, it is important to center your data by subtracting the mean from every feature. In the case of images, this corresponds to computing a mean image across the training images and subtracting it from every image to get images where the pixels range from approximately [-127 … 127]. Further common preprocessing is to scale each input feature so that its values range from [-1, 1].
+                </h5> <br> <br>
+                <h3 class="darklink" align="center">Loss Functions</h3> <br><br>
+                <h5>
+                    For every set of training data (x, y) we can have an infinite number of parameters W and b (just W after using the bias trick). Most of them would do poor job in predicting correct classes for new unseen data and only a few would do reasonable or good job. So, we need a happiness metric which tells us how happy our model is with current set of parameters i.e. W. Loss functions (sometimes also reffered to as cost functions) are our happiness metric. Intuitively, if the loss is low, it means our model is doing a good job classifying data and if the loss is high, it means it's not. 
+                </h5><br>
+                <h4 class="darklink">
+                    Multiclass Support Vector Machine Loss
+                </h4><br>
+                <h5>
+                    So there all kinds of cost/loss functions out there. The one that we are going to deal with in this post is <b>Multiclass Support Vector Machine (SVM) </b>Loss. <span class="darklink">The SVM loss is set up so that the SVM “wants” the correct class for each image to a have a score higher than the incorrect classes by some fixed margin</span> <span><img src="delta.PNG" alt=""></span> <br><br>
+                    Let’s now get more precise. Recall that for the i-th example we are given the pixels of image <span><img src="xi.PNG" alt=""></span> and the label <span><img src="yi.PNG" alt=""></span> that specifies the index of the correct class. The score function takes the pixels and computes the vector <span><img src="fxiw.PNG" alt=""></span> of class scores, which we will abbreviate to s (short for scores). For example, the score for the j-th class is the j-th element: <span><img src="sj.PNG" alt=""></span> The Multiclass SVM loss for the i-th example is then formalized as follows: <br><br>
+                </h5>
+                <div align="center">
+                    <img src="li.PNG" alt="">
+                </div> <br>
+                <h5>
+                    Let's now try to understand what this cost function means in plain english. This cost function says, for all the incorrect classes (the nine classes except the correct one), if the score of the correct class is greater than the score of the incorrect class atleast by a margin <span><img src="delta.PNG" alt=""></span>, then the score will be zero. And this is true for all the incorrect classes. <br>
+                    <span class="darklink">Note,</span> we do not calculate it for the correct class because s(sub j) and s(sub i) i.e. scores of correct and incorrect classes will cancel each other and <span><img src="delta.PNG" alt=""></span> will remain as the result. So what will happen is, for each training example, loss <span><img src="delta.PNG" alt=""></span> (because each example will have one correct class) and it will without any effect increase the cost. Hence, it's better to keep the cost for the correct class 0. Below example will make things much more clear.
+                </h5> <br><br>
+                <div align="center">
+                    <img src="6.PNG" alt="">
+                </div> <br><br>
+                <h5>
+                    A last piece of terminology we’ll mention before we finish with this section is that the threshold at zero <span><img src="8.PNG" alt=""></span> function is often called the hinge loss. You’ll sometimes hear about people instead using the squared hinge loss SVM (or L2-SVM), which uses the form <span><img src="7.PNG" alt=""></span> that penalizes violated margins more strongly (quadratically instead of linearly). The unsquared version is more standard, but in some datasets the squared hinge loss can work better. This can be determined during cross-validation.
+                </h5> <br>
+                <h3 class="darklink" align="center">Regularization</h3><br>
+                <h5>
+                    There is one bug with the loss function we presented above. Suppose that we have a dataset and a set of parameters W that correctly classify every example (i.e. all scores are so that all the margins are met, and <span><img src="lili.PNG" alt=""></span> for all i). The issue is that this set of W is not necessarily unique: there might be many similar W that correctly classify the examples. One easy way to see this is that if some parameters W correctly classify all examples (so loss is zero for each example), then any multiple of these parameters λW where λ > 1 will also give zero loss because this transformation uniformly stretches all score magnitudes and hence also their absolute differences. For example, if the difference in scores between a correct class and a nearest incorrect class was 15, then multiplying all elements of W by 2 would make the new difference 30.
+                </h5> <br>
+                <h5>
+                    In other words, we wish to encode some preference for a certain set of weights W over others to remove this ambiguity. We can do so by extending the loss function with a regularization penalty R(W). The most common regularization penalty is the L2 norm that discourages large weights through an elementwise quadratic penalty over all parameters:
+                </h5> <br>
+                <div align="center">
+                    <img src="reg1.PNG" alt="">
+                </div> <br>
+                <h5>
+                    In the expression above, we are summing up all the squared elements of W. Notice that the regularization function is not a function of the data, it is only based on the weights. Including the regularization penalty completes the full Multiclass Support Vector Machine loss, which is made up of two components: the data loss (which is the average loss Li over all examples) and the regularization loss. That is, the full Multiclass SVM loss becomes:
+                </h5>
+                <div align="center">
+                    <img src="reg2.PNG" alt="">
+                </div> <br>
+                <h5>
+                    Or expanding this out in its full form: <br>
+                </h5><br>
+                <div align="center">
+                    <img src="reg3.PNG" alt="">
+                </div><br>
+                <h5>
+                    Where N is the number of training examples. As you can see, we append the regularization penalty to the loss objective, weighted by a hyperparameter λ. There is no simple way of setting this hyperparameter and it is usually determined by cross-validation. <br><br>
+                    Apart from the reason that L2 regularization will help to reduce the subset of parameters W, they also quite a few other desirable properties. L2 regularization leads to an appealing max margin property in SVM's. L2 regularization also helps the model to generalize better and hence reduce overfitting.
+                    <br><br>
+                    <span class="darklink">Note</span> that biases do not have the same effect since, unlike the weights, they do not control the strength of influence of an input dimension. Therefore, it is common to only regularize the weights W but not the biases b. However, in practice this often turns out to have a negligible effect. Lastly, note that due to the regularization penalty we can never achieve loss of exactly 0.0 on all examples, because this would only be possible in the pathological setting of W = 0. <br><br>
+                    The takeaway from this section is that the SVM loss takes one particular approach to measuring how consistent the predictions on training data are with the ground truth labels. Additionally, making good predictions on the training set is equivalent to minimizing the loss.  
+                    </h5> 
+                    <br><h3 class="darklink">Practical Considerations</h3><br>
+                    <h5>
+                        One question which arises is, What value should we set for <span><img src="delta.PNG" alt=""></span>? It turns out that the value of <span><img src="delta.PNG" alt=""></span> can be safely set to 1.0 in all cases. The hyperparameters Δ and λ seem like two different hyperparameters, but in fact they both control the same tradeoff: The tradeoff between the data loss and the regularization loss in the objective. The key to understanding this is that the magnitude of the weights W has direct effect on the scores (and hence also their differences): As we shrink all values inside W the score differences will become lower, and as we scale up the weights the score differences will all become higher. Therefore, the exact value of the margin between the scores (e.g. Δ = 1, or Δ = 100) is in some sense meaningless because the weights can shrink or stretch the differences arbitrarily. Hence, the only real tradeoff is how large we allow the weights to grow (through the regularization strength λ).
+                    </h5> <br><br>
+                    <h2 class="darklink" align="center">Optimization</h2><br><br>
+                    <h5>
+                        We now have a loss function formulated which tells us how happy we are with our current set of parameters W. And we like all nice people, wanna be as happy as we can i.e. to say we want to find the set of parameters W which will make us most happy. And only the parameters which will help us to minimize the loss will make us most happy. <br>
+                        <span class="darklink">In simple mathematical terms, we want to find the value of parameters W which will minimize the loss function.</span> <br><br>
+                        <b class="darklink">Note, </b>the working example we’ll use (the SVM loss) is a convex problem, but keep in mind that our goal is to eventually optimize Neural Networks where we can’t easily use any of the tools developed in the Convex Optimization literature. <br>
+                        So, there are many strategies which we can apply to our cause. We'll look a bit into each one of them.
+                    </h5> <br>
+                    <h4 class="darklink">Random Search (Don't Use This)</h4> <br>
+                    <h5>
+                        Since it is so simple to check how good a given set of parameters W is, the first (very bad) idea that may come to mind is to simply try out many different random weights and keep track of what works best. This procedure might look as follows:
+                    </h5> <br>
+                    <script src="https://gist.github.com/DiAnant/6553509ac894c2dfb09d004f44942585.js"></script><br>
+                    <h5>
+                        Trying the best found value matrice W on the test set, we achieved an accuracy of 15.5%. Given that complete guessing is 10% chance, this is not so bad for this completely brain-dead-algorithm. <br>
+                        From this experimental algorithm, we can understand that it's not possible (unless you are Jesus, maybe) to find the best value of parameters W in one go. We will have to figure out an <span class="darklink">iterative refinement</span> strategy, which will improve out parameters W a bit on each iteration and we'll eventually end up with a nice set of parameters W which will give low loss.
+                    </h5><br>
+                    <h4 class="darklink">Random Local Search</h4><br>
+                    <h5>
+                        The first strategy you may think of is to try to extend one foot in a random direction and then take a step only if it leads downhill. Concretely, we will start out with a random <span><img src="w1.PNG" alt=""></span>, generate random perturbations <span><img src="w2.PNG" alt=""></span> to it and if the loss at the perturbed <span><img src="w3.PNG" alt=""></span> is lower, we will perform an update. The code for this procedure is as follows:
+                    </h5> <br>
+                    <script src="https://gist.github.com/DiAnant/5210a2778c5d434fc8991d0c7f6d83f1.js"></script><br>
+                    <h5>
+                        Using the same number of loss function evaluations as before (1000), this approach achieves test set classification accuracy of 21.4%. This is better, but still wasteful and computationally expensive.
+                    </h5><br>
+                    <h4 class="darklink">Following The Gradient</h4><br>
+                    <h5>
+                        In the previous section we tried to find a direction in the weight-space that would improve our weight vector (and give us a lower loss). It turns out that there is no need to randomly search for a good direction: we can compute the best direction along which we should change our weight vector that is mathematically guaranteed to be the direction of the steepest descend (at least in the limit as the step size goes towards zero). This direction will be related to the gradient of the loss function. In our hiking analogy, this approach roughly corresponds to feeling the slope of the hill below our feet and stepping down the direction that feels steepest. <br><br> In one-dimensional functions, the slope is the instantaneous rate of change of the function at any point you might be interested in. The gradient is a generalization of slope for functions that don’t take a single number but a vector of numbers. Additionally, the gradient is just a vector of slopes (more commonly referred to as derivatives) for each dimension in the input space. The mathematical expression for the derivative of a 1-D function with respect its input is: <br>
+                    </h5>
+                    <div align="center">
+                        <img src="9.png" alt="">
+                    </div> <br><br>
+                    <h3 class="darklink">Computing The Gradient</h3> <br>
+                    <h5>
+                        There are two ways to compute the gradient: A slow, approximate but easy way (numerical gradient), and a fast, exact but more error-prone way that requires calculus (analytic gradient). We will now present both.
+                    </h5> <br>
+                    <h4 class="darklink">Computing the gradient numerically with finite differences</h4><br>
+                    <h5>
+                        The formula given above allows us to compute the gradient numerically. Here is a generic function that takes a function <span class="darklink">f</span>, a vector <span class="darklink">x</span> to evaluate the gradient on, and returns the gradient of <span class="darklink">f</span> at <span class="darklink">x</span> :
+                    </h5> <br>
+                    <script src="https://gist.github.com/DiAnant/8b619d0e4f0cce97a52b65059f18aee5.js"></script> <br>
+                    <h5>
+                        <span class="darklink">Practical Considerations.</span> Note that in the mathematical formulation the gradient is defined in the limit as h goes towards zero, but in practice it is often sufficient to use a very small value (such as 1e-5 as seen in the example). Ideally, you want to use the smallest step size that does not lead to numerical issues. Additionally, in practice it often works better to compute the numeric gradient using the centered difference formula: <span><img src="10.PNG" alt=""></span>. <br><br>
+                    </h5>
+                    <h5>
+                        Below is the implementation of this idea. <br>
+                    </h5>
+                    <script src="https://gist.github.com/DiAnant/f24cda62b42a498d14ed0321dc596af5.js"></script> <br>
+                    <h5>
+                        <span class="darklink">Update in negative gradient direction.</span> In the code above, notice that to compute W_new we are making an update in the negative direction of the gradient df since we wish our loss function to decrease, not increase.
+                    </h5> <br>
+                    <h5>
+                        <span class="darklink">Effect of step size.</span> The gradient tells us the direction in which the function has the steepest rate of increase, but it does not tell us how far along this direction we should step.  In our blindfolded hill-descent analogy, we feel the hill below our feet sloping in some direction, but the step length we should take is uncertain. If we shuffle our feet carefully we can expect to make consistent but very small progress (this corresponds to having a small step size). Conversely, we can choose to make a large, confident step in an attempt to descend faster, but this may not pay off.
+                    </h5> <br>
+                    <h5>
+                        <span class="darklink">A problem of efficiency.</span> You may have noticed that evaluating the numerical gradient has complexity linear in the number of parameters. In our example we had 30730 parameters in total and therefore had to perform 30,731 evaluations of the loss function to evaluate the gradient and to perform only a single parameter update. This problem only gets worse, since modern Neural Networks can easily have tens of millions of parameters. Clearly, this strategy is not scalable and we need something better.
+                    </h5> <br>
+                    <h4 class="darklink" align="center">Computing the gradient analytically with Calculus</h4> <br>
+                    <h5>
+                        The numerical gradient is very simple to compute using the finite difference approximation, but the downside is that it is approximate (since we have to pick a small value of h, while the true gradient is defined as the limit as h goes to zero), and that it is very computationally expensive to compute. The second way to compute the gradient is analytically using Calculus, which allows us to derive a direct formula for the gradient (no approximations) that is also very fast to compute. However, unlike the numerical gradient it can be more error prone to implement, which is why in practice it is very common to compute the analytic gradient and compare it to the numerical gradient to check the correctness of your implementation. This is called a gradient check. <br><br> Lets use the example of the SVM loss function for a single datapoint:
+                    </h5> <br>
+                    <div align="center">
+                        <img src="11.PNG" alt="">
+                    </div><br>
+                    <h5>
+                        We can differentiate the function with respect to the weights. For example, taking the gradient with respect to <span><img src="14.PNG" alt=""></span> we obtain:
+                    </h5> <br>
+                    <div align="center">
+                        <img src="12.PNG" alt="">
+                    </div> <br>
+                    <h5>
+                        where 1 is the indicator function that is one if the condition inside is true or zero otherwise. While the expression may look scary when it is written out, when you’re implementing this in code you’d simply count the number of classes that didn’t meet the desired margin (and hence contributed to the loss function) and then the data vector <span><img src="xi.PNG" alt=""></span> scaled by this number is the gradient. Notice that this is the gradient only with respect to the row of W that corresponds to the correct class. For the other rows where <span><img src="15.PNG" alt=""></span> the gradient is:
+                    </h5> <br>
+                    <div align="center">
+                        <img src="13.PNG" alt="">
+                    </div> <br>
+                    <h5>
+                        Once you derive the expression for the gradient it is straight-forward to implement the expressions and use them to perform the gradient update. <br>
+                    </h5> <br>
+                    <br>
+                    <h5>
+                        So this was all the theory stuff. I implemented this model with SVM Loss And SGD Optimization with fully vectorized implementations on both <a href="http://yann.lecun.com/exdb/mnist/" target="_blank"><span class="darklink">MNIST</span></a> and <a href="https://www.cs.toronto.edu/~kriz/cifar.html" target="_blank"><span class="darklink">CIFAR-10</span></a> datasets. <br>
+                        You can download my implementation Jupyter Notebooks for both the datasets. These are well labelled and commented notebooks. I have used tensorflow to get the datasets for ease of access. You can change the code in the first few lines to load data from any other source you wish. <br><br>Click to download the <a href="mnist.ipynb" target="_blank" download><span class="darklink">MNIST Implemnation</span></a>. <br>
+                        Click to download the <a href="cifar10.ipynb" target="_blank" download><span class="darklink">CIFAR-10 Implementation</span></a>. <br><br>
+                        After training the model, the validation accuracy for CIFAR-10 model was around 37% and around 85% for MNIST Implementaion. Below are the templates generated after training for both the datasets.
+                    </h5> <br>
+                    <div align="center">
+                        <h4 class="darklink">CIFAR-10</h4> <br>
+                        <img src="16.PNG" alt="">
+                        <br> <br>
+                        <h4 class="darklink">MNIST</h4> <br>
+                        <img src="17.PNG" alt="">
+                    </div> <br><br>
+                    <h5>
+                        And now we'll try to figure out the <span class="darklink">naive</span> and <span class="darklink">vectorized</span> implementations of the <span class="darklink">loss and grad function.</span> <br><br>
+                    </h5>
+                    <h4 class="darklink">Naive Loss</h4><br>
+                    <script src="https://gist.github.com/DiAnant/ef2690453f5e09e28ee0dbe99c9f52d0.js"></script>
+                    <h5>
+                        Above code is the naive implementation for the SVM loss. In this implementation, we loop over all the examples one by one and for each example, for all the incorrect classes we add the losses provided if the loss for that particular class is greater than 0. And yes, loss for the correct class is defined to be 0.
+                    </h5> <br>
+                    <h4 class="darklink">Naive Gradient</h4><br>
+                    <h5>
+                        Proof for the gradients calculation w.r.t to parameters of both correct and incorrect classes.
+                    </h5>
+                    <div align="center">
+                        <img src="18.jpg" alt="">
+                    </div> <br>
+                    <h5>
+                        Below is the naive implementation of both loss and gradient function. Hope the code doesn't seems as scary as the equations.
+                    </h5> <br>
+                    <script src="https://gist.github.com/DiAnant/8b07bf082dee4e35ade1ea6f0d6e819b.js"></script> <br>
+                    <h4 class="darklink">Vectorized Implementation</h4>
+                    <h5>
+                        The above approach gives correct answer but is too slow. That's what using too many for-loops do to the models efficiency. To achieve much more efficiency we will have to make use of computations parrel computation powers i.e. to simply say, we'll have to write vectorized implementation for finding loss and gradients.
+                    </h5> <br>
+                    <script src="https://gist.github.com/DiAnant/9baf1507d75559fcfd272423e4b0c554.js"></script> <br>
+                    <h5>
+                        This is the vectorized implementation for the loss and gradient function. Looking at the code for a minute should make you realize that it's doing just same thing as the naive implementation but is instead backing up on Linear Algebra rather than on For-Loops. And this has had considerable effect on the computation speed.
+                    </h5> <br>
+                    <div align="center">
+                        <img src="20.PNG" alt="">
+                    </div> <br>
+                    <h5>
+                        Vectorized code is more than 5 times fast just when the computation is done on the development set, the difference will only increase with the size of the training data. Both the jupyter notebooks have a section which compares the runtime of both the naive and vectorized codes. 
+                    </h5>
+            
+        <br><br><br><hr><br><br>
+        </div>
+        
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body></html>
