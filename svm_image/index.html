@@ -152,6 +152,9 @@
                     Apart from the reason that L2 regularization will help to reduce the subset of parameters W, they also quite a few other desirable properties. L2 regularization leads to an appealing max margin property in SVM's. L2 regularization also helps the model to generalize better and hence reduce overfitting.
                     <br><br>
                     <span class="darklink">Note</span> that biases do not have the same effect since, unlike the weights, they do not control the strength of influence of an input dimension. Therefore, it is common to only regularize the weights W but not the biases b. However, in practice this often turns out to have a negligible effect. Lastly, note that due to the regularization penalty we can never achieve loss of exactly 0.0 on all examples, because this would only be possible in the pathological setting of W = 0. <br><br>
+                    So a good <span class="darklink">intuitive result</span> of regularization can be thought of as, <span class="darklink">'if there are two sets of weights which make network to output same result, regularization will make network to prefer the weight set where all the weights contribute a bit rather to the weight set in which one of the parameter influence the result.'</span> This means that regularization will make the network generalize better as the parameters are distributed in their effort to form a result.
+                    
+                    <br><br>
                     The takeaway from this section is that the SVM loss takes one particular approach to measuring how consistent the predictions on training data are with the ground truth labels. Additionally, making good predictions on the training set is equivalent to minimizing the loss.  
                     </h5> 
                     <br><h3 class="darklink">Practical Considerations</h3><br>

@@ -41,3 +41,10 @@ hr{
 .x{
     width: 70%;
 }
+
+#box{
+    border-style: solid;
+    border-width: 5px;
+    border-color: black;
+    padding: 10px
+}
