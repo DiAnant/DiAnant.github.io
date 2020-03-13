@@ -53,7 +53,7 @@
          
              <h5 class="lineh">The most common application of neural networks taught to beginners in the field is of handwritten digits recognition by using MNIST dataset. You could simply use a popular deep learning framework like Tensorflow or PyTorch and code up a recognizer in like 2-3 minutes but do you understand what happens inside the model. How just supplying some matrices/tensors to a model it acquires this ability to recognize handwritten digits? Let’s find out.</h5> <br><br><br>
              
-             <h5 class="lineh"><b>Note:</b>  I myself have learnt about this subject from Michael Nielson’s excellent <a class="darklink" href="http://neuralnetworksanddeeplearning.com" target="_blank">book</a> and Andrew Ng’s deep learning <a class="darklink" href="https://www.coursera.org/specializations/deep-learning" target="_blank">specialization</a> which I higly recommend to take a look at yourself. I feel that Michael’s implementation of Feedforward net is excellent because it generalizes perfectly well compared to some other implementations of neural nets you’ll find on the internet. And I have used his approach in this code too.</h5>
+             <h5 class="lineh"><b class="darklink">Note:</b>  I myself have learnt about this subject from Michael Nielson’s excellent <a class="darklink" href="http://neuralnetworksanddeeplearning.com" target="_blank">book</a> and Andrew Ng’s deep learning <a class="darklink" href="https://www.coursera.org/specializations/deep-learning" target="_blank">specialization</a> which I higly recommend to take a look at yourself. I feel that Michael’s implementation of Feedforward net is excellent because it generalizes perfectly well compared to some other implementations of neural nets you’ll find on the internet. And I have used his approach in this code too.</h5>
              <br><br><br>
              
              <h5 class="lineh">We are going to use MNIST dataset available on <a href="https://www.kaggle.com/c/digit-recognizer/data" class="darklink">Kaggle.</a> Let’s take a look at the dataset.</h5>
@@ -185,13 +185,9 @@
                      </div> <br><hr><br>
                      <h4><b>Equation 4</b></h4> <br><br>
                      <h5 class="lineh">Now similarly, we'll want to find a way of relating weights with delta, so that we can know how much the cost will change when we change weights of a particular neuron or neurons. <br><br>
-                     Equation (1) relates change in cost with <span><img src="delta.PNG" alt="delta"></span>. <br>
-                     Equation (2) relates weights of next layer with <span><img src="delta.PNG" alt="delta"></span>. <br>
-                     </h5> <br>
-                     <div align="center">
-                         <img src="equation12.PNG" alt="equations12">
-                     </div> <br>
-                     <h5 class="lineh">From above two equations, substituting value of <span><img src="delta.PNG" alt="delta"></span> from one equation into another, and some basic algebra then should result in this equation,</h5> <br>
+                     As we have done in the first two equations, we can derive this relation by using the chain rule too. <br>
+                    </h5>
+                    <br>
                      <div align="center">
                          <img src="equation4.PNG" alt="equation_4">
                      </div> <br>

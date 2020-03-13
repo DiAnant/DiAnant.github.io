@@ -1,0 +1,135 @@
+<html lang="en">
+  
+   
+   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>A Two Layer Net</title>
+
+    <!--linking css-->
+    <link rel="stylesheet" href="css/style.css"class="css">
+    <!--linking font-->
+    <link href="https://fonts.googleapis.com/css?family=Arvo:400,700" rel="stylesheet">
+    <!--linking fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+
+
+<body>
+
+    <!--    making a navbar-->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark mynav">
+        <a class="navbar-brand font-weight-bold" href="https://dianant.github.io/">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse mr-100" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto mr-10">
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#projects">Projects<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#blog">Blog</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link font-weight-bold" href="https://dianant.github.io/#aboutMe">About Me</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    
+    <!-- Navbar Ends-->
+
+        
+<!--           heading-->
+            <h1 align="center" id="heading" class="darklink">Two Layer Net</h1>   
+            <hr>
+            <br><br><br><br><br><br><br>
+        <div class="container">    
+             <h5>
+                 In the last post we learnt about softmax cost and layer and implemented it on a linear classifier. It did a reasonably nice job but now it's time to go a bit deeper. This time instead of a boring 
+                 linear classifier, we are going to implement a two layer neural network, i.e a neural network with one hidden layer. <br><br>
+                 <b class="darklink">Note: </b> This is a blog shows the implementation of <a href="http://cs231n.github.io/assignments2019/assignment1/" target="_blank"><span class="darklink">cs231n assignment 1, TwoLayerNet Section.</span></a> The notes for this assignment involves various topics namely, softmax and backpropagation.
+                 Link for the notes is <a href="http://cs231n.github.io" target="_blank"><span class="darklink">here.</span></a> And you should also download the <a href="TwoLayerNet.ipynb" target="_blank" download><span class="darklink">Jupyter Notebook</span></a> for this assignment. To make this work download the assignment zip file from the link I provided above and put this in the main folder. Also you'll have to get the CIFAR10 dataset batch files from <a href="https://www.cs.toronto.edu/~kriz/cifar.html" target="_blank"><span class="darklink">here.</span></a>
+             </h5> <br><br><br>
+             <h3 class="darklink" align = "center">Loss And Grads</h3> <br><br>
+             <h5>
+                We are going to implement a simple feedforward neural network which 
+                will have just one hidden layer. In this network we'll be using softmax loss function which is basically a crossentropy loss function with a softmax activation function for the final layer of the neural network. This helps to generate scores for the classes as normalized probablities which are very handy to interpret.
+             </h5> <br><br>
+             <h5>
+                 For calculating loss, the first thing we'll have to do is to perform  a forward pass. We have done forward pass quite a few times in previous exercises and should be pretty easy to understand. Below is the code I have used for forward pass in the Jupyter Notebook.
+             </h5> <br>
+             <script src="https://gist.github.com/DiAnant/43d341d4dbe916144918e51e8069e378.js"></script> <br>
+             <h5>
+                 Now, after the forward pass we'll want to calculate the loss for the
+                 scores which were calculated during the forward pass. The softmax loss function is defined as this,
+             </h5> <br>
+             <div align="center">
+                 <img src="2.PNG" alt="loss">
+             </div> <br>
+             <h5>
+                 We are going to do a vectorized implementation of this loss function. It's implementation is actually pretty straightforward
+                 and if you are having any trouble understanding it, go to my previous post on <a href="../softmax_image/index.html" target="_blank"><span class="darklink">softmax image classifier</span></a> and try to understand the both naive (using for loops) and vectorized implementations of loss and grads. Below is the code for implementing vectorized loss.
+             </h5> <br>
+             <script src="https://gist.github.com/DiAnant/e4b580a8642ebb501d44e9e23fbe2b32.js"></script> <br>
+             <h5>
+                 We have our cost function ready. And now, we would like to obtain some nice parameters i.e. weights and biases which will provide us the minimum value of the cost function. There are many approaches which can be used to obtain these desired parameters. The one that best works and is <span class="darklink">gradient descent</span>. We will implement a special variant of gradient descent called <span class="darklink">mini-batch gradient descent.</span> You can read more about gradient descent and its type in my this <a href="../allkindsofgrad/index.html" target="_blank"><span class="darklink">blog post.</span></a> <br><br>
+                 So Gradient Descent calculates gradient calculates gradient of the cost function i.e a vector of partial derivatives w.r.t. all its parameters. And then we take small steps in the direction of steepest descent provided by gradients. To calculate the gradients, an algorithm called <span class="darklink">backpropagation</span> is used. Backpropagation has gained quite a reputaion for being notoriously difficult to understand but Andrej Karpathy sums it best in one line, it's just the recursive implementation of Calculus' chain rule. Detailed notes backpopagation can be found from the <a href="http://cs231n.github.io/optimization-2/" target="_blank"><span class="darklink">cs231n course websites</span></a>.
+             </h5> <br><br>
+             <h5>
+                 Here, I'll sum up the implementation of backpropagation in this network. First we will generate the computation graphs for our neural network. The computation graph for our this neural net will be, <br> <br>
+             </h5>
+             <div align="center">
+                 <img src="1.PNG" alt="computational graph">
+             </div> <br>
+             <h5>
+                 Now we will start calculating gradients from the back w.r.t to 'softmaxes' with the help of chain rule. The values above the '------' were calculated during the forward pass and the values under the dashes i.e. the gradients will be calculated during the backward pass. The whole process is explained with help of the examples in the course notes. So, below is the code for implementing this backward pass. <br> <br>
+             </h5>
+             <script src="https://gist.github.com/DiAnant/cb4082e4e6148c9409cc309b696a293d.js"></script> <br>
+             <h5>
+                 The local gradient for each gate is calculated during the forward pass itself and is stored in cache. During backward pass, chain rule is implied for each involved parameter to find it's influence on the final 'softmaxes' loss of the network. In chain rule, local gradient at that parameter is multiplied by the gradient from the top (gradient comming from the rear end of the network). <br><br><br>
+                 So after implementing the backprop, we trained our network on some nicely guessed hyperparameters. Using those we got accuracy of around 29% on the validation set. We also tried to visualize some weights from the layer 1. These were the results. <br>
+             </h5> <br><br>
+             <div align="center">
+                <h4 class="darklink">Loss And Accuracies</h4> <br>
+                 <img src="3.PNG" alt=""> <br><br>
+                 <img src="4.PNG" alt=""> <br><br>
+                 <h4 class="darklink">Weights Visualization</h4> <br>
+                 <img src="5.PNG" alt=""> <br><br>
+             </div>
+             <h5>
+                 Looking at the visualizations above, we see that the loss is decreasing more or less linearly, which seems to suggest that the learning rate may be too low. Moreover, there is no gap between the training and validation accuracy, suggesting that the model we used has low capacity, and that we should increase its size. On the other hand, with a very large model we would expect to see more overfitting, which would manifest itself as a very large gap between the training and validation accuracy. <br><br>
+                 So we trained our model on many other different combinations of hyperparameters like size of hidden layer, learning rate, regularization parameter and found that the best accuracy on the validation set was about 49%. We again visualized the weights of the trained network. <br>
+             </h5> <br>
+             <div align="center">
+                 <img src="6.PNG" alt="">
+             </div> <br> <br>
+             <h5>
+                 As you can probably notice, the templates generated by the weights of network which gave better accuracy are much more rich in features as compared to the templates generated earlier. At last, I would again highly recommend reading <a href="http://cs231n.github.io/optimization-2/" target="_blank"><span class="darklink">these course notes</span></a> from cs231n website very carefully. It will make things all the more clear for you. The <a href="https://www.youtube.com/watch?v=i94OvYb6noo" target="_blank"><span class="darklink">video lecture</span></a> for backpropagation is also recommended even though notes contain most of the content. 
+             </h5> <br><br><br>
+             <h2 class="darklink" align="center">Why Backprop?</h2> <br>
+             <h5>
+                 Well we know that backprop give the derivatives and it's just like chain rule. But do we know why we do backward-propagation? What's wrong with doing forward-propagation like sane humans have been using it for years. The answer lies in the fact that backpropagation makes training of a reasonable size neural network in today's time approximately a million times faster. <br><br>
+                 This is no magic by any means, just a little tweak. If we decide to do forward propagation, we'll have to calculate derivatives of all the nodes in the computaion graph w.r.t. to one of the million parameters. This would finally give us derivative of output w.r.t. to that particular input. And that's what we want, derivative of output w.r.t to inputs. But we want that for each and every parameter of the network, not just that one parameter. It means we'll have to do this process a million times in order to compute derivatives w.r.t to each and every parameter. <br><br>
+                 Well, let's try backward-propagation this time. Woah, in one go we can find derivatives of each and every parameter w.r.t to the output. This algorithm made calculating derivatives (grads) literally million times faster and even a billion times for bigger nets. <br><br>
+                 This is what <span class="darklink">Christopher Olah</span> explains in detail in his super-awesome <a href="http://colah.github.io/posts/2015-08-Backprop/" target="_blank"><span class="darklink">blogpost</span></a> which you must, must read. Moreover, you should read everything what's on his blog. I will be mentioning the relevant stuff in blogs whenever need be.
+             </h5>
+             
+             
+         
+         
+         <br><br><br><hr><br><br>
+        <!---the last fucking line-->
+        </div>
+        
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body></html>

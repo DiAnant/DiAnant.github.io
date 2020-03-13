@@ -53,8 +53,19 @@
              <h5>
                  In this post, I am going to implement all the better techniques we discussed in earlier posts, like a better <span class="darklink">cost function</span>, new way of <span class="darklink">weight initialization</span> and the <span class="darklink">L2 regularization.</span> Almost all of the code is  taken from chapter-3 of Michael Nielsen's excellent book, <a href="http://neuralnetworksanddeeplearning.com\chap3.html" target="_blank"><span class="darklink">Neural Networks And Deep Learning.</span></a> This post is just an attempt of understanding the code better myself by explaining it, kind of like a mock exercise but if it helps you, freakin' great then. 
              </h5> <br><br><br>
+             <h3 class="darklink" align="center"><b>Cost Function</b></h3> <br>
              <h5>
-                 
+                The most significant change, impactwise which we have made in the past Neural Net is using the <span class="darklink">Cross Entropy Cost Function</span> instead of the Mean Square Error (MSE) cost function. In past blog I have discussed that how using the cross entropy cost function solves the problem of learning slowdown caused by MSE cost function. <br><br>
+                Using the cross entropy cost also effected equations of the backpropagation we derived earlier for MSE cost. Using the MSE cost function, the <span class="darklink">delta for the last L'th layer</span> is defined as, <br><br>
+                <div align="center">
+                    <img src="equation1_1.PNG" alt="">
+                </div> <br>
+                This includes the derivative of sigmoid function which is the main culprit behind causing the learning slowdown. To get rid of this term, intelligent people studying artificial intelligence made Cross Entropy cost function such that it would help them to get rid of the sigmoid derivative term, <br><br>
+                <div align="center">
+                    <img src="delta.PNG" alt="">
+                </div> <br>
+                and they made it happen. All the derivations and details are covered in this <a href="../crossentropy/index.html" target="_blank"><span class="darklink">blog post here.</span></a> <br><br>
+                
              </h5>
              
         
